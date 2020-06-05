@@ -1,51 +1,25 @@
 package com.billdog.user.entity;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity(name = "ORGANIZATION")
 @Table(name = "organization")
-public class Organization {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-	@GenericGenerator(name = "native", strategy = "native")
-	@Column(name = "Id")
-	private long id;
-	
-	@Column(name = "name")
+public class Organization extends BaseEntity{
+
+	@Column(name = "organization_name",columnDefinition = "NVARCHAR(250)")
 	private String name;
 	
-	@Column(name = "status")
+	@Column(name = "status",columnDefinition = "NVARCHAR(250)")
 	private String status;
 
-	@Column(name = "phone_number")
+	@Column(name = "phone_number",columnDefinition = "NVARCHAR(250)")
 	private String phoneNumber;	
 
-	@Column(name = "fax_number")
+	@Column(name = "fax_number",columnDefinition = "NVARCHAR(250)")
 	private String faxNumber;
-	
-	@Column(name = "created_time")
-	private LocalDateTime createdAt;
-
-	@Column(name = "updated_time")
-	private LocalDateTime updatedAt;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -79,22 +53,6 @@ public class Organization {
 		this.faxNumber = faxNumber;
 	}
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-	
 	
 
 }
