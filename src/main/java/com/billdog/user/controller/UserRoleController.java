@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.billdog.user.request.CreateRole;
+import com.amazonaws.services.identitymanagement.model.CreateRoleRequest;
 import com.billdog.user.view.ViewResponse;
 
 import io.swagger.annotations.ApiResponse;
@@ -26,7 +26,7 @@ public class UserRoleController {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
 	@PostMapping(value = "/addRole", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<ViewResponse> login(@RequestBody CreateRole createRole) {
+	public ResponseEntity<ViewResponse> login(@RequestBody CreateRoleRequest createRole) {
 		
 		return null;
 	}

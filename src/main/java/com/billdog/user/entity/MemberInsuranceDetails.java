@@ -17,7 +17,7 @@ public class MemberInsuranceDetails extends BaseEntity{
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")
-	private member memberId;	
+	private Member memberId;	
 	
 	@Column(name = "insurance_type_name",columnDefinition = "NVARCHAR(250)")
 	private String typeName;	
@@ -44,11 +44,11 @@ public class MemberInsuranceDetails extends BaseEntity{
 		this.organizationId = organizationId;
 	}
 
-	public member getMemberId() {
+	public Member getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(member memberId) {
+	public void setMemberId(Member memberId) {
 		this.memberId = memberId;
 	}
 
