@@ -20,19 +20,13 @@ public class BaseEntity {
 	@Column(name = "Id")
 	private long id;
 	
-	@Column(name = "organization_id")
-	private long organizationId;
-	
 	@Column(name = "created_time")
-	private LocalDateTime createdTime;
+	private LocalDateTime createdAt;
 
 	@Audited
 	@Column(name = "updated_time")
-	private LocalDateTime updatedTime;
+	private LocalDateTime updatedAt;
 
-	@Audited
-	@Column(name = "modified_by")
-	private String modifiedBy;
 
 	public long getId() {
 		return id;
@@ -40,39 +34,24 @@ public class BaseEntity {
 
 	public void setId(long id) {
 		this.id = id;
+	}	
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
 
-	public LocalDateTime getCreatedTime() {
-		return createdTime;
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
-	public void setCreatedTime(LocalDateTime createdTime) {
-		this.createdTime = createdTime;
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
 	}
 
-	public LocalDateTime getUpdatedTime() {
-		return updatedTime;
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
-	public void setUpdatedTime(LocalDateTime updatedTime) {
-		this.updatedTime = updatedTime;
-	}
-
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public long getOrganizationId() {
-		return organizationId;
-	}
-
-	public void setOrganizationId(long organizationId) {
-		this.organizationId = organizationId;
-	}
 	
 
 }
