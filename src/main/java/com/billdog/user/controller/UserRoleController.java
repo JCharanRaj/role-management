@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.amazonaws.services.identitymanagement.model.CreateRoleRequest;
 import com.billdog.user.command.CreateUserCommand;
 import com.billdog.user.command.EditUserDetailsCommand;
+import com.billdog.user.command.SearchUsersCommand;
 import com.billdog.user.request.CreateUserRequest;
 import com.billdog.user.request.EditUserDetailsRequest;
+import com.billdog.user.request.SearchUsersRequest;
 import com.billdog.user.response.LoginResponse;
 import com.billdog.user.view.ViewResponse;
 
@@ -34,6 +36,9 @@ public class UserRoleController {
 
 	@Autowired
 	EditUserDetailsCommand editUserDetailsCommand;
+
+	@Autowired
+	SearchUsersCommand searchUsersCommand;
 
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
@@ -58,6 +63,14 @@ public class UserRoleController {
 	@PutMapping(value = "/editUserDetails", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public LoginResponse editUserDetails(@RequestBody EditUserDetailsRequest editUserDetailsRequest) {
 		return editUserDetailsCommand.excute(editUserDetailsRequest);
+	}
+
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user details fetched successfully"),
+			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
+	@PostMapping(value = "/searchUserDetails", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ViewResponse searchUsers(@RequestBody SearchUsersRequest searchUsersRequest) {
+		return searchUsersCommand.excute(searchUsersRequest);
 	}
 
 }

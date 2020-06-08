@@ -3,9 +3,7 @@ package com.billdog.user.view;
 public class SearchUserDetailsResponse {
 
 	private Long Id;
-	private String firstName;
-	private String lastName;
-	private String middleName;
+	private String name;
 	private String mobileNumber;
 	private String role;
 	private String email;
@@ -18,28 +16,12 @@ public class SearchUserDetailsResponse {
 		Id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getMiddleName() {
-		return middleName;
-	}
-
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getMobileNumber() {

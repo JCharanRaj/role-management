@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.billdog.user.entity.Organization;
 import com.billdog.user.entity.Roles;
-import com.billdog.user.exception.InValidInputException;
+import com.billdog.user.exception.NoRecordFoundException;
 import com.billdog.user.repository.OrganizationRepository;
 import com.billdog.user.repository.RolesRepository;
 import com.billdog.user.request.EditUserDetailsRequest;
@@ -31,12 +31,12 @@ public class EditUserDetailsCommand implements Command<EditUserDetailsRequest, L
 
 		Optional<Organization> organization = organizationRepository.findById(editUserDetailsRequest.getUserId());
 		if (!organization.isPresent()) {
-			throw new InValidInputException("userID not found with " + editUserDetailsRequest.getUserId());
+			throw new NoRecordFoundException("userID not found with " + editUserDetailsRequest.getUserId());
 		}
 
 		Optional<Roles> role = rolesRepository.findById(editUserDetailsRequest.getRoleId());
 		if (!role.isPresent()) {
-			throw new InValidInputException("roleID not found with " + editUserDetailsRequest.getRoleId());
+			throw new NoRecordFoundException("roleID not found with " + editUserDetailsRequest.getRoleId());
 		}
 		return createUserService.editUserDetails(editUserDetailsRequest);
 

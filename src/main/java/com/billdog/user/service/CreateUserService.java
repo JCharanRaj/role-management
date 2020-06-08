@@ -1,6 +1,9 @@
 package com.billdog.user.service;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.LoggerFactory;
@@ -12,13 +15,17 @@ import com.billdog.user.entity.Organization;
 import com.billdog.user.entity.Roles;
 import com.billdog.user.entity.SystemUsers;
 import com.billdog.user.exception.InValidInputException;
+import com.billdog.user.exception.NoRecordFoundException;
 import com.billdog.user.repository.NamePrefixMasterRepository;
 import com.billdog.user.repository.OrganizationRepository;
 import com.billdog.user.repository.RolesRepository;
 import com.billdog.user.repository.SystemUsersrepository;
 import com.billdog.user.request.CreateUserRequest;
 import com.billdog.user.request.EditUserDetailsRequest;
+import com.billdog.user.request.SearchUsersRequest;
 import com.billdog.user.response.LoginResponse;
+import com.billdog.user.view.SearchUserDetailsResponse;
+import com.billdog.user.view.ViewResponse;
 
 @Service
 public class CreateUserService {
@@ -42,16 +49,16 @@ public class CreateUserService {
 
 		Optional<Organization> organization = organizationRepository.findById(createUserRequest.getUserId());
 		if (!organization.isPresent()) {
-			throw new InValidInputException("userID not found with " + createUserRequest.getUserId());
+			throw new NoRecordFoundException("userID not found with " + createUserRequest.getUserId());
 		}
 		Optional<NamePrefixMaster> namePrefixMaster = namePrefixMasterRepository.findById((long) 1);
 		if (!namePrefixMaster.isPresent()) {
-			throw new InValidInputException("Id not found with " + 1);
+			throw new NoRecordFoundException("Id not found with " + 1);
 		}
 
 		Optional<Roles> role = rolesRepository.findById(createUserRequest.getRoleId());
 		if (!role.isPresent()) {
-			throw new InValidInputException("Id not found with " + createUserRequest.getRoleId());
+			throw new NoRecordFoundException("roleId not found with " + createUserRequest.getRoleId());
 		}
 
 		SystemUsers systemUsers = new SystemUsers();
@@ -81,7 +88,7 @@ public class CreateUserService {
 
 		Optional<SystemUsers> systemUserEntity = systemUsersrepository.findById(editUserDetailsRequest.getId());
 		if (!systemUserEntity.isPresent()) {
-			throw new InValidInputException("User not found with id " + editUserDetailsRequest.getId());
+			throw new NoRecordFoundException("User not found with id " + editUserDetailsRequest.getId());
 		}
 
 		SystemUsers user = systemUserEntity.get();
@@ -103,36 +110,44 @@ public class CreateUserService {
 
 	}
 
-//	public ViewResponse searchUsers(SearchUsersRequest searchUsersRequest) {
-//
-//		List<SearchUserDetailsResponse> viewUserDetailsResponseList = new ArrayList<>();
-//
-//		Object[][] userDetails = systemUsersrepository.getUserDetails(searchRequest.getName(), searchRequest.getName());
-//
-//		for (Object[] objects : userDetails) {
-//
-//			SearchUserDetailsResponse searchUserDetailsResponse = new SearchUserDetailsResponse();
-//
-//			viewStudentDetails.setAddress((String) objects[0]);
-//			viewStudentDetails.setAddress1((String) objects[1]);
-//			viewStudentDetails.setBranch((String) objects[2]);
-//			viewStudentDetails.setCity((String) objects[3]);
-//			viewStudentDetails.setEmail((String) objects[4]);
-//			viewStudentDetails.setFatherName((String) objects[5]);
-//			viewStudentDetails.setName((String) objects[6]);
-//			viewStudentDetails.setNumber((String) objects[7]);
-//			viewStudentDetails.setRollNumber((String) objects[8]);
-//			viewStudentDetails.setState((String) objects[9]);
-//			viewStudentDetailsList.add(viewStudentDetails);
-//
-//		}
-//
-//		StudentView response = new StudentView();
-//		response.setStatus("success");
-//		response.setData(viewStudentDetailsList);
-//
-//		return response;
-//
-//	}
+	public ViewResponse searchUsers(SearchUsersRequest searchUsersRequest) {
+
+		List<SearchUserDetailsResponse> viewUserDetailsResponseList = new ArrayList<>();
+
+		String userFirstName = searchUsersRequest.getFirstName();
+		String userLastName = searchUsersRequest.getLastName();
+
+		Long roleId = searchUsersRequest.getRoleId();
+		if(roleId == 0) {
+			roleId = -999l;
+		}
+
+		String mobileNumber = searchUsersRequest.getMobileNumber();
+		String email = searchUsersRequest.getEmail();
+
+		Object[][] userDetails = systemUsersrepository.getUserDetails(userFirstName, userFirstName, userLastName,
+				userLastName, mobileNumber, mobileNumber, email, email, roleId, roleId);
+
+		for (Object[] objects : userDetails) {
+
+			SearchUserDetailsResponse searchUserDetailsResponse = new SearchUserDetailsResponse();
+
+			searchUserDetailsResponse.setId(((BigInteger) objects[0]).longValue());
+			searchUserDetailsResponse.setName(((String) objects[1]));
+			searchUserDetailsResponse.setEmail((String) objects[2]);
+			searchUserDetailsResponse.setMobileNumber((String) objects[3]);
+			searchUserDetailsResponse.setRole((String) objects[4]);
+			viewUserDetailsResponseList.add(searchUserDetailsResponse);
+
+		}
+
+		ViewResponse response = new ViewResponse();
+		response.setStatusText("success");
+		response.setMessage("user details fetched successfully");
+		response.setData(viewUserDetailsResponseList);
+
+		return response;
+
+	}
 
 }
