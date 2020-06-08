@@ -12,8 +12,7 @@ import com.billdog.user.request.CreateNavigationScreen;
 import com.billdog.user.view.ViewResponse;
 
 @Service
-public class NavigationService {
-	
+public class NavigationService {	
 
 	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(NavigationService.class);
 	
