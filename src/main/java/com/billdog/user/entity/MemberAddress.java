@@ -2,6 +2,8 @@ package com.billdog.user.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "MEMBER_ADDRESS")
@@ -14,14 +16,17 @@ public class MemberAddress extends BaseEntity {
 	@Column(name = "city_name", columnDefinition = "NVARCHAR(250)")
 	private String cityName;
 
-	@Column(name = "organisation_id")
-	private long organsationId;
+	@ManyToOne
+	@JoinColumn(name = "organization_id")
+	private Organization organsation_id;
 
-	@Column(name = "state_master_id")
-	private long stateMasterId;
+	@ManyToOne
+	@JoinColumn(name = "state_master_id")
+	private StateMaster stateMasterId;
 
-	@Column(name = "country_master_id")
-	private long countryMasterId;
+	@ManyToOne
+	@JoinColumn(name = "country_master_id")
+	private CountryMaster countryMasterId;
 
 	public String getStreet() {
 		return street;
@@ -39,28 +44,28 @@ public class MemberAddress extends BaseEntity {
 		this.cityName = cityName;
 	}
 
-	public long getOrgansationId() {
-		return organsationId;
+	public Organization getOrgansation_id() {
+		return organsation_id;
 	}
 
-	public void setOrgansationId(long organsationId) {
-		this.organsationId = organsationId;
+	public void setOrgansation_id(Organization organsation_id) {
+		this.organsation_id = organsation_id;
 	}
 
-	public long getStateMasterId() {
+	public StateMaster getStateMasterId() {
 		return stateMasterId;
 	}
 
-	public void setStateMasterId(long stateMasterId) {
+	public void setStateMasterId(StateMaster stateMasterId) {
 		this.stateMasterId = stateMasterId;
 	}
 
-	public long getCountryMasterId() {
+	public CountryMaster getCountryMasterId() {
 		return countryMasterId;
 	}
 
-	public void setCountryMasterId(long countryMasterId) {
+	public void setCountryMasterId(CountryMaster countryMasterId) {
 		this.countryMasterId = countryMasterId;
 	}
 
-	}
+}

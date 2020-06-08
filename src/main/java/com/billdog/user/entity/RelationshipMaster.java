@@ -2,6 +2,8 @@ package com.billdog.user.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "RELATIONSHIP_MASTER")
@@ -14,8 +16,9 @@ public class RelationshipMaster extends BaseEntity {
 	@Column(name = "status", columnDefinition = "NVARCHAR(250)")
 	private String status;
 
-	@Column(name = "organisation_id")
-	private long organsation_id;
+	@ManyToOne
+	@JoinColumn(name = "organization_id")
+	private Organization organsation_id;
 
 	public String getRelationshipName() {
 		return relationshipName;
@@ -33,11 +36,11 @@ public class RelationshipMaster extends BaseEntity {
 		this.status = status;
 	}
 
-	public long getOrgansation_id() {
+	public Organization getOrgansation_id() {
 		return organsation_id;
 	}
 
-	public void setOrgansation_id(long organsation_id) {
+	public void setOrgansation_id(Organization organsation_id) {
 		this.organsation_id = organsation_id;
 	}
 

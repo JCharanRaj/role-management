@@ -2,6 +2,8 @@ package com.billdog.user.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "COUNTRY_PHONE_CODE_MASTER")
@@ -11,14 +13,16 @@ public class CountryPhoneCodeMaster extends BaseEntity {
 	@Column(name = "phone_number_code")
 	private long phoneNumberCode;
 
-	@Column(name = "country_master_id")
-	private long countryMasterId;
+	@ManyToOne
+	@JoinColumn(name = "country_master_id")
+	private CountryMaster countryMasterId;
 
 	@Column(name = "status", columnDefinition = "NVARCHAR(250)")
 	private String status;
 
-	@Column(name = "organisation_id")
-	private long organsation_id;
+	@ManyToOne
+	@JoinColumn(name = "organization_id")
+	private Organization organsation_id;
 
 	public long getPhoneNumberCode() {
 		return phoneNumberCode;
@@ -26,14 +30,6 @@ public class CountryPhoneCodeMaster extends BaseEntity {
 
 	public void setPhoneNumberCode(long phoneNumberCode) {
 		this.phoneNumberCode = phoneNumberCode;
-	}
-
-	public long getCountryMasterId() {
-		return countryMasterId;
-	}
-
-	public void setCountryMasterId(long countryMasterId) {
-		this.countryMasterId = countryMasterId;
 	}
 
 	public String getStatus() {
@@ -44,11 +40,19 @@ public class CountryPhoneCodeMaster extends BaseEntity {
 		this.status = status;
 	}
 
-	public long getOrgansation_id() {
+	public CountryMaster getCountryMasterId() {
+		return countryMasterId;
+	}
+
+	public void setCountryMasterId(CountryMaster countryMasterId) {
+		this.countryMasterId = countryMasterId;
+	}
+
+	public Organization getOrgansation_id() {
 		return organsation_id;
 	}
 
-	public void setOrgansation_id(long organsation_id) {
+	public void setOrgansation_id(Organization organsation_id) {
 		this.organsation_id = organsation_id;
 	}
 

@@ -1,43 +1,47 @@
 package com.billdog.user.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "USER_ROLE_MAP")
 @Table(name = "user_role_map")
 public class UserRoleMap extends BaseEntity {
 
-	@Column(name = "organisation_id")
-	private long organisationId;
+	@ManyToOne
+	@JoinColumn(name = "organization_id")
+	private Organization organsation_id;
 
-	@Column(name = "role_id")
-	private long roleId;
+	@ManyToOne
+	@JoinColumn(name = "role_id")
+	private Roles roleId;
 
-	@Column(name = "member_id")
-	private long memberId;
+	@ManyToOne
+	@JoinColumn(name = "member_id")
+	private Member memberId;
 
-	public long getOrganisationId() {
-		return organisationId;
+	public Organization getOrgansation_id() {
+		return organsation_id;
 	}
 
-	public void setOrganisationId(long organisationId) {
-		this.organisationId = organisationId;
+	public void setOrgansation_id(Organization organsation_id) {
+		this.organsation_id = organsation_id;
 	}
 
-	public long getRoleId() {
+	public Roles getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(long roleId) {
+	public void setRoleId(Roles roleId) {
 		this.roleId = roleId;
 	}
 
-	public long getMemberId() {
+	public Member getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(long memberId) {
+	public void setMemberId(Member memberId) {
 		this.memberId = memberId;
 	}
 

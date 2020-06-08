@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "MEMBER")
@@ -31,20 +33,24 @@ public class Member extends BaseEntity {
 	@Column(name = "locked")
 	private long locked;
 
-	@Column(name = "organisation_id")
-	private long organsation_id;
+	@ManyToOne
+	@JoinColumn(name = "organization_id")
+	private Organization organsation_id;
 
-	@Column(name = "member_type_master_id")
-	private long memberTypeMasterId;
+	@ManyToOne
+	@JoinColumn(name = "member_type_master_id")
+	private MemberTypeMaster memberTypeMasterId;
 
 	@Column(name = "phone_number")
 	private long phoneNumber;
 
-	@Column(name = "country_phone_code_master_id")
-	private long countryPhoneCodeMasterId;
+	@ManyToOne
+	@JoinColumn(name = "country_phone_code_master_id")
+	private CountryPhoneCodeMaster countryPhoneCodeMasterId;
 
-	@Column(name = "name_prefix_master_id")
-	private long namePrefixMasterId;
+	@ManyToOne
+	@JoinColumn(name = "name_prefix_master_id")
+	private NamePrefixMaster namePrefixMasterId;
 
 	public long getMemberId() {
 		return memberId;
@@ -102,22 +108,6 @@ public class Member extends BaseEntity {
 		this.locked = locked;
 	}
 
-	public long getOrgansation_id() {
-		return organsation_id;
-	}
-
-	public void setOrgansation_id(long organsation_id) {
-		this.organsation_id = organsation_id;
-	}
-
-	public long getMemberTypeMasterId() {
-		return memberTypeMasterId;
-	}
-
-	public void setMemberTypeMasterId(long memberTypeMasterId) {
-		this.memberTypeMasterId = memberTypeMasterId;
-	}
-
 	public long getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -126,19 +116,35 @@ public class Member extends BaseEntity {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public long getCountryPhoneCodeMasterId() {
+	public Organization getOrgansation_id() {
+		return organsation_id;
+	}
+
+	public void setOrgansation_id(Organization organsation_id) {
+		this.organsation_id = organsation_id;
+	}
+
+	public MemberTypeMaster getMemberTypeMasterId() {
+		return memberTypeMasterId;
+	}
+
+	public void setMemberTypeMasterId(MemberTypeMaster memberTypeMasterId) {
+		this.memberTypeMasterId = memberTypeMasterId;
+	}
+
+	public CountryPhoneCodeMaster getCountryPhoneCodeMasterId() {
 		return countryPhoneCodeMasterId;
 	}
 
-	public void setCountryPhoneCodeMasterId(long countryPhoneCodeMasterId) {
+	public void setCountryPhoneCodeMasterId(CountryPhoneCodeMaster countryPhoneCodeMasterId) {
 		this.countryPhoneCodeMasterId = countryPhoneCodeMasterId;
 	}
 
-	public long getNamePrefixMasterId() {
+	public NamePrefixMaster getNamePrefixMasterId() {
 		return namePrefixMasterId;
 	}
 
-	public void setNamePrefixMasterId(long namePrefixMasterId) {
+	public void setNamePrefixMasterId(NamePrefixMaster namePrefixMasterId) {
 		this.namePrefixMasterId = namePrefixMasterId;
 	}
 
