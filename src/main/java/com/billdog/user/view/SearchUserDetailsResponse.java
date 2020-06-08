@@ -1,22 +1,21 @@
-package com.billdog.user.request;
+package com.billdog.user.view;
 
-public class EditUserDetailsRequest {
+public class SearchUserDetailsResponse {
 
-	private long id;
+	private Long Id;
 	private String firstName;
 	private String lastName;
 	private String middleName;
-	private String email;
 	private String mobileNumber;
-	private long roleId;
-	private long userId;
+	private String role;
+	private String email;
 
-	public long getId() {
-		return id;
+	public Long getId() {
+		return Id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId(Long id) {
+		Id = id;
 	}
 
 	public String getFirstName() {
@@ -43,14 +42,6 @@ public class EditUserDetailsRequest {
 		this.middleName = middleName;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getMobileNumber() {
 		return mobileNumber;
 	}
@@ -59,20 +50,20 @@ public class EditUserDetailsRequest {
 		this.mobileNumber = mobileNumber;
 	}
 
-	public long getRoleId() {
-		return roleId;
+	public String getRole() {
+		return role;
 	}
 
-	public void setRoleId(long roleId) {
-		this.roleId = roleId;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
-	public long getUserId() {
-		return userId;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

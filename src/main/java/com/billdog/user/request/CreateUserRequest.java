@@ -2,18 +2,36 @@ package com.billdog.user.request;
 
 public class CreateUserRequest {
 
-	private String name;
+	private String firstName;
+	private String lastName;
+	private String middleName;
 	private String email;
 	private String mobileNumber;
 	private long roleId;
 	private long userId;
 
-	public String getName() {
-		return name;
+	public String getMiddleName() {
+		return middleName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
