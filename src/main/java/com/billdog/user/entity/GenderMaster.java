@@ -9,6 +9,7 @@ import javax.persistence.Table;
 @Entity(name = "GENDER_MASTER")
 @Table(name = "gender_master")
 public class GenderMaster extends BaseEntity {
+	
 
 	@Column(name = "gender", columnDefinition = "NVARCHAR(250)")
 	private String gender;
