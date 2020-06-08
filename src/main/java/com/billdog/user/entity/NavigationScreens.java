@@ -18,8 +18,11 @@ public class NavigationScreens extends BaseEntity{
 	
 	@Column(name = "name",columnDefinition = "NVARCHAR(250)")
 	private String name;	
+	
+	@Column(name = "url",columnDefinition = "NVARCHAR(250) default #")
+	private String url;	
 
-	@Column(name = "parent_id")
+	@Column(name = "parent_id", columnDefinition = "bigint(20) default 0")
 	private long parent_id;
 	
 
