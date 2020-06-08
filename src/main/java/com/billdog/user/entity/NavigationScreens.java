@@ -6,10 +6,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity(name = "NAVIGATION_SCREENS_ACCESS")
-@Table(name = "navigation_screens_access")
+@Entity(name = "NAVIGATION_SCREENS")
+@Table(name = "navigation_screens")
 public class NavigationScreens extends BaseEntity{
-
 
 	
 	@ManyToOne
@@ -19,7 +18,7 @@ public class NavigationScreens extends BaseEntity{
 	@Column(name = "name",columnDefinition = "NVARCHAR(250)")
 	private String name;	
 	
-	@Column(name = "url",columnDefinition = "NVARCHAR(250) default #")
+	@Column(name = "url",columnDefinition = "NVARCHAR(250) default '#'")
 	private String url;	
 
 	@Column(name = "parent_id", columnDefinition = "bigint(20) default 0")
@@ -48,6 +47,14 @@ public class NavigationScreens extends BaseEntity{
 
 	public void setParent_id(long parent_id) {
 		this.parent_id = parent_id;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 }

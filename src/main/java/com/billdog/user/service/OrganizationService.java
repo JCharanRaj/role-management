@@ -6,7 +6,7 @@ import org.hibernate.envers.Audited;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.billdog.user.entity.NavigationScreens;
+import com.billdog.user.common.Constants;
 import com.billdog.user.entity.Organization;
 import com.billdog.user.repository.OrganizationRepository;
 import com.billdog.user.request.CreateOrganization;
@@ -26,14 +26,25 @@ public class OrganizationService {
 		LOGGER.info("createNavigationPage method started..!");
 		
 		Organization organization=organizationRepository.findByName(createOrganization.getName());
+
+		ViewResponse response= new ViewResponse();
 		
+		if(organization !=null) {
+			
+		}
+			Organization newOrganization=new Organization();
+			newOrganization.setCreatedAt(LocalDateTime.now());
+			newOrganization.setUpdatedAt(LocalDateTime.now());
+			newOrganization.setFaxNumber(createOrganization.getFaxNumber());
+			newOrganization.setPhoneNumber(createOrganization.getPhoneNumber());
+			newOrganization.setStatus("ACTIVE");
+			response.setId(newOrganization.getId());
 		
-		NavigationScreens navigationScreens=new NavigationScreens();
-		navigationScreens.setCreatedAt(LocalDateTime.now());
-		navigationScreens.setUpdatedAt(LocalDateTime.now());
-		navigationScreens.setOrganizationId(organization);
 		
 		LOGGER.info("createNavigationPage method ends..!");
+		
+		response.setStatusText(Constants.SUCCESS);
+		response.setMessage("Member is updated successfully!!");	
 		return null;
 		
 	}

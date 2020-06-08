@@ -12,4 +12,10 @@ public class Constants{
 
 	public static final String MIDDLE_NAME = "Please enter middle name!";
 
+	public static final String ORGANIZATION_NOT_FOUND_WITH_ID = "No organization exists with id:: ";
+
+	public static final String NAVIGATION_NOT_FOUND_WITH_ID = "No navigation screen exists with id:: ";
+
+	public static final String NAVIGATION_SCREEN_CREATED = "Navigation screen created successfully..!";
+
 }

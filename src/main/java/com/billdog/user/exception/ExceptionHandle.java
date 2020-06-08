@@ -12,23 +12,28 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.billdog.user.common.Constants;
 
-
 @RestController
 @ControllerAdvice
 public class ExceptionHandle extends ResponseEntityExceptionHandler {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandle.class);
-	
 
-	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandle.class);
+
 	@ExceptionHandler(InValidInputException.class)
-	public final ResponseEntity<ErrorResponse> handleInValidInputException(
-			InValidInputException exception, WebRequest request) {
-		LOGGER.info("Exceptin cause: "+exception.getMessage());
-		ErrorResponse errorResponse = new ErrorResponse(Constants.FAILED,exception.getLocalizedMessage(), request.getDescription(false));
+	public final ResponseEntity<ErrorResponse> handleInValidInputException(InValidInputException exception,
+			WebRequest request) {
+		LOGGER.info("Exceptin cause: " + exception.getMessage());
+		ErrorResponse errorResponse = new ErrorResponse(Constants.FAILED, exception.getLocalizedMessage(),
+				request.getDescription(false));
 		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
-	
-	
-	
+
+	@ExceptionHandler(NoRecordFoundException.class)
+	public final ResponseEntity<ErrorResponse> handleNoRecordFoundException(NoRecordFoundException exception,
+			WebRequest request) {
+		LOGGER.info("Exceptin cause: " + exception.getMessage());
+		ErrorResponse errorResponse = new ErrorResponse(Constants.FAILED, exception.getLocalizedMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+	}
+
 }

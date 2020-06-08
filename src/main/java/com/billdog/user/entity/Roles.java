@@ -13,11 +13,9 @@ import org.hibernate.envers.Audited;
 public class Roles extends BaseEntity{
 
 
-	@Audited
 	@Column(name = "role")
 	private String role;
 
-	@Audited
 	@Column(name = "status")
 	private String status;
 	
@@ -26,7 +24,7 @@ public class Roles extends BaseEntity{
 	@ManyToOne
 	@JoinColumn(name = "organization_id")
 	private Organization organizationId;
-	
+
 	@Audited
 	@Column(name = "modified_by",columnDefinition = "NVARCHAR(250)")
 	private String modifiedBy;

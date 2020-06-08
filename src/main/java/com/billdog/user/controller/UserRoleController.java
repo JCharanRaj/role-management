@@ -2,6 +2,7 @@ package com.billdog.user.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.amazonaws.services.identitymanagement.model.CreateRoleRequest;
+import com.billdog.user.command.CreateNavigationScreenCommand;
+import com.billdog.user.request.CreateNavigationScreen;
+import com.billdog.user.request.CreateRoleRequest;
+import com.billdog.user.service.CreateRoleService;
 import com.billdog.user.view.ViewResponse;
 
 import io.swagger.annotations.ApiResponse;
@@ -22,14 +26,34 @@ import io.swagger.models.Response;
 @CrossOrigin(origins = "*")
 public class UserRoleController {
 	
+	
+	@Autowired
+	CreateNavigationScreenCommand createNavigationScreenCommand;
+	
+	
+	@Autowired
+	CreateRoleService createRoleService;
+	
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
 	@PostMapping(value = "/addRole", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<ViewResponse> login(@RequestBody CreateRoleRequest createRole) {
 		
-		return null;
+		return createRoleService.createUserRole(null);
 	}
+	
+	
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpServletResponse.SC_OK, response = ViewResponse.class, message = "Create Navigation Screen OTP"),
+			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = ViewResponse.class, message = "Invalid parameters") })
+	@PostMapping(value = "/navigationScreen", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<ViewResponse> createNavigationScreen(@RequestBody CreateNavigationScreen createNavigationScreen) {
+		
+		return createRoleService.createNavigationPage(createNavigationScreen);
+		//return navigationService.createNavigationPage(createNavigationScreen);
+	}
+
 
 
 }
