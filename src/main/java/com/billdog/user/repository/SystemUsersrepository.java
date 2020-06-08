@@ -1,8 +1,11 @@
 package com.billdog.user.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.billdog.user.entity.Organization;
 import com.billdog.user.entity.SystemUsers;
 
 public interface SystemUsersrepository extends JpaRepository<SystemUsers, Long> {
@@ -18,4 +21,8 @@ public interface SystemUsersrepository extends JpaRepository<SystemUsers, Long> 
 
 	Object[][] getUserDetails(String userFirstName, String userFirstName2, String userLastName, String userLastName2,
 			String mobileNumber, String mobileNumber2, String email, String email2, Long roleId, Long roleId2);
+
+	Optional<SystemUsers> findByRoleId(long roleId);
+
+	Optional<SystemUsers> findByOrganzationId(long userId);
 }

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.billdog.user.entity.NamePrefixMaster;
-import com.billdog.user.entity.Organization;
 import com.billdog.user.entity.Roles;
 import com.billdog.user.entity.SystemUsers;
 import com.billdog.user.exception.InValidInputException;
@@ -47,9 +46,9 @@ public class CreateUserService {
 	public LoginResponse createUser(CreateUserRequest createUserRequest) {
 		LOGGER.info("create user method started..!");
 
-		Optional<Organization> organization = organizationRepository.findById(createUserRequest.getUserId());
-		if (!organization.isPresent()) {
-			throw new NoRecordFoundException("userID not found with " + createUserRequest.getUserId());
+		Optional<SystemUsers> sysUser = systemUsersrepository.findById(createUserRequest.getUserId());
+		if (!sysUser.isPresent()) {
+			throw new NoRecordFoundException("Organization not found with Id " + createUserRequest.getUserId());
 		}
 		Optional<NamePrefixMaster> namePrefixMaster = namePrefixMasterRepository.findById((long) 1);
 		if (!namePrefixMaster.isPresent()) {
@@ -64,7 +63,7 @@ public class CreateUserService {
 		SystemUsers systemUsers = new SystemUsers();
 		systemUsers.setCreatedAt(LocalDateTime.now());
 		systemUsers.setUpdatedAt(LocalDateTime.now());
-		systemUsers.setOrgansationId(organization.get());
+		systemUsers.setOrganzationId(sysUser.get().getOrganzationId());
 		systemUsers.setFirstName(createUserRequest.getFirstName());
 		systemUsers.setLastName(createUserRequest.getLastName());
 		systemUsers.setMiddleName(createUserRequest.getMiddleName());
@@ -83,22 +82,30 @@ public class CreateUserService {
 
 	}
 
-	public LoginResponse editUserDetails(EditUserDetailsRequest editUserDetailsRequest) {
+	public LoginResponse editUserDetails(EditUserDetailsRequest editUserDetailsRequest, Roles role) {
 		LOGGER.info("edit user details method started..!");
+
+		Optional<SystemUsers> sysUser = systemUsersrepository.findById(editUserDetailsRequest.getUserId());
+		if (!sysUser.isPresent()) {
+			throw new NoRecordFoundException("Organization not found with Id " + editUserDetailsRequest.getUserId());
+		}
 
 		Optional<SystemUsers> systemUserEntity = systemUsersrepository.findById(editUserDetailsRequest.getId());
 		if (!systemUserEntity.isPresent()) {
 			throw new NoRecordFoundException("User not found with id " + editUserDetailsRequest.getId());
 		}
+		if (systemUserEntity.get().getOrganzationId().getId() != sysUser.get().getOrganzationId().getId()) {
+			throw new InValidInputException("this user does not belong to same organization");
+		}
 
 		SystemUsers user = systemUserEntity.get();
-		user.setCreatedAt(LocalDateTime.now());
 		user.setUpdatedAt(LocalDateTime.now());
 		user.setFirstName(editUserDetailsRequest.getFirstName());
 		user.setLastName(editUserDetailsRequest.getLastName());
 		user.setMiddleName(editUserDetailsRequest.getMiddleName());
 		user.setEmail(editUserDetailsRequest.getEmail());
 		user.setMobileNumber(editUserDetailsRequest.getMobileNumber());
+		user.setRoleId(role);
 		systemUsersrepository.save(user);
 
 		LoginResponse loginResponse = new LoginResponse();
@@ -118,7 +125,7 @@ public class CreateUserService {
 		String userLastName = searchUsersRequest.getLastName();
 
 		Long roleId = searchUsersRequest.getRoleId();
-		if(roleId == 0) {
+		if (roleId == 0) {
 			roleId = -999l;
 		}
 

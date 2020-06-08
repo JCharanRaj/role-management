@@ -27,7 +27,7 @@ public class SystemUsers extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "organization_id")
-	private Organization organsationId;
+	private Organization organzationId;
 
 	@ManyToOne
 	@JoinColumn(name = "role_Id")
@@ -61,12 +61,12 @@ public class SystemUsers extends BaseEntity {
 		this.lastName = lastName;
 	}
 
-	public Organization getOrgansationId() {
-		return organsationId;
+	public Organization getOrganzationId() {
+		return organzationId;
 	}
 
-	public void setOrgansationId(Organization organsationId) {
-		this.organsationId = organsationId;
+	public void setOrganzationId(Organization organzationId) {
+		this.organzationId = organzationId;
 	}
 
 	public NamePrefixMaster getNamePrefixMasterid() {
