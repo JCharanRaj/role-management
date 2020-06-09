@@ -6,11 +6,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity(name = "NAVIGATION_SCREENS_ACCESS")
-@Table(name = "navigation_screens_access")
-public class NavigationScreens extends BaseEntity{
-
-
+@Entity(name = "NAVIGATION_SCREENS")
+@Table(name = "navigation_screens")
+public class NavigationScreen extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "organization_id")
@@ -19,12 +17,14 @@ public class NavigationScreens extends BaseEntity{
 	@Column(name = "name",columnDefinition = "NVARCHAR(250)")
 	private String name;	
 	
-	@Column(name = "url",columnDefinition = "NVARCHAR(250) default #")
+	@Column(name = "url",columnDefinition = "NVARCHAR(250) default '#'")
 	private String url;	
 
 	@Column(name = "parent_id", columnDefinition = "bigint(20) default 0")
 	private long parent_id;
 	
+	@Column(name = "display_order", columnDefinition = "bigint(20) default 0")
+	private long displayOrder;
 
 	public Organization getOrganizationId() {
 		return organizationId;
@@ -48,6 +48,22 @@ public class NavigationScreens extends BaseEntity{
 
 	public void setParent_id(long parent_id) {
 		this.parent_id = parent_id;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public long getDisplayOrder() {
+		return displayOrder;
+	}
+
+	public void setDisplayOrder(long displayOrder) {
+		this.displayOrder = displayOrder;
 	}
 	
 }

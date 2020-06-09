@@ -1,11 +1,19 @@
 package com.billdog.user.request;
 
-public class EditPrevilegesRequest {
+import javax.validation.constraints.NotNull;
 
+public class EditPrevilegesRequest {
+	
 	private long id;
+	
 	private boolean read;
+	
 	private boolean write;
+	
+	@NotNull(message = "Roleid must not be null")
 	private long roleId;
+	
+	@NotNull(message = "Userid must not be null")
 	private long userId;
 
 	public long getId() {

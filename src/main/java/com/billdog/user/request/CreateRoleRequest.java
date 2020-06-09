@@ -1,8 +1,14 @@
 package com.billdog.user.request;
 
-public class CreateRoleRequest {
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+public class CreateRoleRequest {
+	
+	@NotBlank(message = "Role name is mandatory")
 	private String name;
+
+	@NotNull(message = "Userid must not be null")
 	private long userId;
 
 	public String getName() {
