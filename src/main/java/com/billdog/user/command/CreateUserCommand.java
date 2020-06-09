@@ -18,19 +18,19 @@ public class CreateUserCommand implements Command<CreateUserRequest, LoginRespon
 	public LoginResponse excute(CreateUserRequest createUserRequest) {
 
 		if (createUserRequest.getFirstName().isEmpty()) {
-			throw new InValidInputException("First Name should not be empty");
+			throw new InValidInputException("Please enter First name");
 		}
 
 		if (createUserRequest.getLastName().isEmpty()) {
-			throw new InValidInputException("last Name should not be empty");
+			throw new InValidInputException("Please enter Last name");
 		}
 
 		if (createUserRequest.getEmail().isEmpty()) {
-			throw new InValidInputException("email should not be empty");
+			throw new InValidInputException("Please enter Email");
 		}
 
 		if (createUserRequest.getMobileNumber().isEmpty()) {
-			throw new InValidInputException("mobile number should not be empty");
+			throw new InValidInputException("Please enter Mobile Number");
 		}
 		return createUserService.createUser(createUserRequest);
 
