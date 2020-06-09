@@ -17,21 +17,6 @@ public class CreateUserCommand implements Command<CreateUserRequest, LoginRespon
 	@Override
 	public LoginResponse excute(CreateUserRequest createUserRequest) {
 
-		if (createUserRequest.getFirstName().isEmpty()) {
-			throw new InValidInputException("First Name should not be null");
-		}
-
-		if (createUserRequest.getLastName().isEmpty()) {
-			throw new InValidInputException("last Name should not be null");
-		}
-
-		if (createUserRequest.getEmail().isEmpty()) {
-			throw new InValidInputException("email should not be null");
-		}
-
-		if (createUserRequest.getMobileNumber().isEmpty()) {
-			throw new InValidInputException("mobile number should not be null");
-		}
 		return createUserService.createUser(createUserRequest);
 
 	}

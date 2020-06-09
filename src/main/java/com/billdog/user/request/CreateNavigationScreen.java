@@ -1,11 +1,18 @@
 package com.billdog.user.request;
 
+import javax.validation.constraints.NotNull;
+
 public class CreateNavigationScreen {
 	
 	private long parentId;
+	@NotNull(message = "Screen name must not be null")
 	private String name;
+	@NotNull(message = "Screen url must not be null")
 	private String url;
+	@NotNull(message = "Organization id must not be null")
 	private long organizationId;
+	
+
 	public long getParentId() {
 		return parentId;
 	}
