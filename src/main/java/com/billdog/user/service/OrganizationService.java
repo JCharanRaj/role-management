@@ -6,7 +6,7 @@ import org.hibernate.envers.Audited;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.billdog.user.entity.NavigationScreens;
+import com.billdog.user.entity.NavigationScreen;
 import com.billdog.user.entity.Organization;
 import com.billdog.user.repository.OrganizationRepository;
 import com.billdog.user.request.CreateOrganization;
@@ -28,7 +28,7 @@ public class OrganizationService {
 		Organization organization=organizationRepository.findByName(createOrganization.getName());
 		
 		
-		NavigationScreens navigationScreens=new NavigationScreens();
+		NavigationScreen navigationScreens=new NavigationScreen();
 		navigationScreens.setCreatedAt(LocalDateTime.now());
 		navigationScreens.setUpdatedAt(LocalDateTime.now());
 		navigationScreens.setOrganizationId(organization);

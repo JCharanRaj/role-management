@@ -16,7 +16,6 @@ public class CreateUserCommand implements Command<CreateUserRequest, LoginRespon
 
 	@Override
 	public LoginResponse excute(CreateUserRequest createUserRequest) {
-
 		if (createUserRequest.getFirstName().isEmpty()) {
 			throw new InValidInputException("Please enter First name");
 		}

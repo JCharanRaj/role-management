@@ -20,7 +20,7 @@ public class RoleNavigationScreens extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "navigation_screens_access_id")
-	private NavigationScreens navigationScreensId;
+	private NavigationScreen navigationScreensId;
 
 	@Column(name = "read_access")
 	private boolean readAccess;
@@ -44,11 +44,11 @@ public class RoleNavigationScreens extends BaseEntity {
 		this.roleId = roleId;
 	}
 
-	public NavigationScreens getNavigationScreensId() {
+	public NavigationScreen getNavigationScreensId() {
 		return navigationScreensId;
 	}
 
-	public void setNavigationScreensId(NavigationScreens navigationScreensId) {
+	public void setNavigationScreensId(NavigationScreen navigationScreensId) {
 		this.navigationScreensId = navigationScreensId;
 	}
 
