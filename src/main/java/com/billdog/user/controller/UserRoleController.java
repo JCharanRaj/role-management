@@ -100,7 +100,7 @@ public class UserRoleController {
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user updated successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
-	@PutMapping(value = "/updateUser", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PutMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public UpdateUserDetailsResponse editUserDetails(
 			@Valid @RequestBody EditUserDetailsRequest editUserDetailsRequest) {
 		return editUserDetailsCommand.excute(editUserDetailsRequest);
@@ -118,7 +118,7 @@ public class UserRoleController {
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user details fetched successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
-	@PostMapping(value = "/searchUserDetails", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/searchUsers", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ViewResponse searchUsers(@RequestBody SearchUsersRequest searchUsersRequest) {
 		return searchUsersCommand.excute(searchUsersRequest);
 	}
