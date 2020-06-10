@@ -116,7 +116,6 @@ public class UserRoleController {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user created successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
 	@PostMapping(value = "/navigationScreen", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-
 	public ResponseEntity<ViewResponse> createNavigationScreen(
 			@Valid @RequestBody CreateNavigationScreen createNavigationScreen) {
 		return createNavigationScreenCommand.excute(createNavigationScreen);
