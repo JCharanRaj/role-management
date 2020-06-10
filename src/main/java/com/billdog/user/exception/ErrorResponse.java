@@ -2,9 +2,8 @@ package com.billdog.user.exception;
 
 import java.time.LocalDateTime;
 
-
 public class ErrorResponse {
-	
+
 	private String statusText;
 	private String message;
 	private LocalDateTime timeStamp;
@@ -15,9 +14,12 @@ public class ErrorResponse {
 		this.message = message;
 		this.path = path;
 		this.timeStamp = LocalDateTime.now();
-		this.statusText= status;
+		this.statusText = status;
 	}
 
+	public ErrorResponse() {
+
+	}
 
 	public String getStatus() {
 		return statusText;
@@ -34,6 +36,5 @@ public class ErrorResponse {
 	public String getPath() {
 		return path;
 	}
-
 
 }

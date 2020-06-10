@@ -63,7 +63,7 @@ public class GetRoleService {
 
 		}
 
-		List<Roles> roles = rolesRepository.findByOrganizationId(userOptional.get().getOrganzationId());
+		List<Roles> roles = rolesRepository.findByOrganizationId(userOptional.get().getOrganizationId());
 		List<ViewRole> viewRoles = roles.stream().map(role -> getRole(role)).collect(Collectors.toList());
 
 		ViewResponse viewResponse = new ViewResponse();

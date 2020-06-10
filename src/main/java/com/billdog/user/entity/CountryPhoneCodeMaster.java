@@ -10,11 +10,11 @@ import javax.persistence.Table;
 @Table(name = "country_phone_code_master")
 public class CountryPhoneCodeMaster extends BaseEntity {
 
-	@Column(name = "phone_number_code")
+	@Column(name = "PHONE_NUMBER_CODE")
 	private long phoneNumberCode;
 
 	@ManyToOne
-	@JoinColumn(name = "country_master_id")
+	@JoinColumn(name = "COUNTRY_MASTER_ID")
 	private CountryMaster countryMasterId;
 
 	@Column(name = "status", columnDefinition = "NVARCHAR(250)")
@@ -22,7 +22,7 @@ public class CountryPhoneCodeMaster extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "organization_id")
-	private Organization organsation_id;
+	private Organization organizationId;
 
 	public long getPhoneNumberCode() {
 		return phoneNumberCode;
@@ -48,12 +48,13 @@ public class CountryPhoneCodeMaster extends BaseEntity {
 		this.countryMasterId = countryMasterId;
 	}
 
-	public Organization getOrgansation_id() {
-		return organsation_id;
+	public Organization getOrganizationId() {
+		return organizationId;
 	}
 
-	public void setOrgansation_id(Organization organsation_id) {
-		this.organsation_id = organsation_id;
+	public void setOrganizationId(Organization organizationId) {
+		this.organizationId = organizationId;
 	}
+
 
 }

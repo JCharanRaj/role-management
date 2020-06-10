@@ -1,6 +1,8 @@
 package com.billdog.user.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.LoggerFactory;
@@ -10,25 +12,36 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.billdog.user.common.Constants;
+import com.billdog.user.common.ExceptionalMessages;
 import com.billdog.user.entity.NavigationScreen;
 import com.billdog.user.entity.Organization;
+import com.billdog.user.entity.RoleNavigationScreens;
+import com.billdog.user.entity.SystemUsers;
+import com.billdog.user.exception.InValidInputException;
 import com.billdog.user.exception.NoRecordFoundException;
 import com.billdog.user.repository.NavigationScreenRepository;
 import com.billdog.user.repository.OrganizationRepository;
+import com.billdog.user.repository.RoleNavigationScreensRepository;
+import com.billdog.user.repository.SystemUsersrepository;
 import com.billdog.user.request.CreateNavigationScreen;
+import com.billdog.user.request.UpdateNavigationScreen;
 import com.billdog.user.view.ViewResponse;
 
 @Service
 public class NavigationService {	
 
 	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(NavigationService.class);
-	
 	@Autowired
 	NavigationScreenRepository navigationScreenRepository;
-	
 
 	@Autowired
 	OrganizationRepository organizationRepository;
+
+	@Autowired
+	SystemUsersrepository systemUsersrepository;
+
+	@Autowired
+	RoleNavigationScreensRepository roleNavigationScreensRepository;
 	
 	
 	public ResponseEntity<ViewResponse> createNavigationPage(CreateNavigationScreen screen) {
@@ -68,6 +81,39 @@ public class NavigationService {
 		LOGGER.info("createNavigationPage method ends..!");
 		return ResponseEntity.status(HttpStatus.OK).body(viewResponse);
 		
+	}
+
+
+	/*
+	 * this method takes list of role UpdateScreenRequest objects to update screen
+	 * access by role
+	 * 
+	 */
+	public ResponseEntity<ViewResponse> updateScreenAccess(UpdateNavigationScreen request) {
+		LOGGER.info("updateScreenAccess method starts..!");
+		Optional<SystemUsers> userOptional = systemUsersrepository.findById(request.getUserId());
+		if (!userOptional.isPresent()) {
+			throw new InValidInputException(ExceptionalMessages.USER_NOT_FOUND + request.getUserId());
+		}
+		List<RoleNavigationScreens> screenRequests = new ArrayList<>();
+		request.getUpdateScreens().forEach(screen -> {
+			Optional<RoleNavigationScreens> optional = roleNavigationScreensRepository.findById(screen.getId());
+			if (!optional.isPresent()) {
+
+			}
+			RoleNavigationScreens screenRequest = optional.get();
+			screenRequest.setWriteAccess(screen.isWriteAccess());
+			screenRequest.setReadAccess(screen.isReadAccess());
+			screenRequests.add(screenRequest);
+		});
+
+		roleNavigationScreensRepository.saveAll(screenRequests);
+		ViewResponse viewResponse = new ViewResponse();
+		viewResponse.setId(request.getUserId());
+		viewResponse.setStatusText(Constants.SUCCESS);
+		viewResponse.setMessage(Constants.NAVIGATION_SCREEN_ACCESS_UPDATED);
+		LOGGER.info("updateScreenAccess method ends..!");
+		return ResponseEntity.status(HttpStatus.OK).body(viewResponse);
 	}
 	
 	

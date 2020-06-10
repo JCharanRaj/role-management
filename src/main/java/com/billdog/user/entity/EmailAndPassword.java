@@ -8,10 +8,10 @@ import javax.persistence.Table;
 @Table(name = "email_and_Password")
 public class EmailAndPassword extends BaseEntity {
 
-	@Column(name = "email", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "EMAIL", columnDefinition = "NVARCHAR(250)")
 	private String email;
 
-	@Column(name = "password", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "PASSWORD", columnDefinition = "NVARCHAR(250)")
 	private String password;
 
 	public String getEmail() {
