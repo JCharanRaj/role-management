@@ -217,13 +217,12 @@ public class CreateUserService {
 	public ResponseEntity<ViewResponse> getUserById(GetUserRequest getUserRequest) {
 		LOGGER.info("edit user details method started..!");
 
-		
 		Optional<SystemUsers> userEntity = systemUsersrepository.findById(getUserRequest.getId());
 		if (!userEntity.isPresent()) {
 			throw new NoRecordFoundException(ExceptionalMessages.USER_NOT_FOUND + getUserRequest.getUserId());
 		}
-		
-		// This jpa query checks whether the user is present or not 
+
+		// This jpa query checks whether the user is present or not
 		Optional<SystemUsers> sysUser = systemUsersrepository.findById(getUserRequest.getUserId());
 		if (!sysUser.isPresent()) {
 			throw new NoRecordFoundException(ExceptionalMessages.USER_NOT_FOUND + getUserRequest.getUserId());
