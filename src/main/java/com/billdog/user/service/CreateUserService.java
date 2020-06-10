@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.billdog.user.common.ExceptionalMessages;
 import com.billdog.user.entity.NamePrefixMaster;
 import com.billdog.user.entity.Organization;
 import com.billdog.user.entity.Roles;
@@ -42,7 +43,7 @@ public class CreateUserService {
 
 		Optional<Organization> organization = organizationRepository.findById(createUserRequest.getUserId());
 		if (!organization.isPresent()) {
-			throw new InValidInputException("userID not found with " + createUserRequest.getUserId());
+			throw new InValidInputException(ExceptionalMessages.USER_NOT_FOUND + createUserRequest.getUserId());
 		}
 		Optional<NamePrefixMaster> namePrefixMaster = namePrefixMasterRepository.findById((long) 1);
 		if (!namePrefixMaster.isPresent()) {
@@ -51,7 +52,7 @@ public class CreateUserService {
 
 		Optional<Roles> role = rolesRepository.findById(createUserRequest.getRoleId());
 		if (!role.isPresent()) {
-			throw new InValidInputException("Id not found with " + createUserRequest.getRoleId());
+			throw new InValidInputException(ExceptionalMessages.ROLE_NOT_FOUND+ createUserRequest.getRoleId());
 		}
 
 		SystemUsers systemUsers = new SystemUsers();

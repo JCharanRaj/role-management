@@ -3,7 +3,6 @@ package com.billdog.user.command;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.billdog.user.exception.InValidInputException;
 import com.billdog.user.request.CreateUserRequest;
 import com.billdog.user.response.LoginResponse;
 import com.billdog.user.service.CreateUserService;
