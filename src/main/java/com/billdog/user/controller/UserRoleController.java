@@ -22,6 +22,8 @@ import com.billdog.user.command.EditUserDetailsCommand;
 import com.billdog.user.command.GetRoleScreensCommand;
 import com.billdog.user.command.GetRolesCommand;
 import com.billdog.user.command.SearchUsersCommand;
+import com.billdog.user.command.UpdatePasswordCommand;
+import com.billdog.user.command.VerifyPasscodeCommand;
 import com.billdog.user.command.ViewUserDetailsByIdCommand;
 import com.billdog.user.request.CreateNavigationScreen;
 import com.billdog.user.request.CreateRoleRequest;
@@ -29,7 +31,10 @@ import com.billdog.user.request.CreateUserRequest;
 import com.billdog.user.request.EditUserDetailsRequest;
 import com.billdog.user.request.GetRoleScreens;
 import com.billdog.user.request.SearchUsersRequest;
+import com.billdog.user.request.UpdatePasswordRequest;
+import com.billdog.user.request.VerifyPasscodeRequest;
 import com.billdog.user.response.CreateUserResponse;
+import com.billdog.user.response.LoginResponse;
 import com.billdog.user.response.UpdateUserDetailsResponse;
 import com.billdog.user.view.ViewResponse;
 
@@ -65,6 +70,12 @@ public class UserRoleController {
 
 	@Autowired
 	ViewUserDetailsByIdCommand viewUserDetailsByIdCommand;
+
+	@Autowired
+	VerifyPasscodeCommand verifyPasscodeCommand;
+
+	@Autowired
+	UpdatePasswordCommand updatePasswordCommand;
 
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
@@ -135,6 +146,24 @@ public class UserRoleController {
 	public ResponseEntity<ViewResponse> getUser(@PathVariable long userId) {
 
 		return viewUserDetailsByIdCommand.excute(userId);
+	}
+
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "passcode verified successfully"),
+			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
+	@PostMapping(value = "/verifyPasscode", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<LoginResponse> verifyPasscode(
+			@Valid @RequestBody VerifyPasscodeRequest verifyPasscodeRequest) {
+		return verifyPasscodeCommand.excute(verifyPasscodeRequest);
+	}
+
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "password updated successfully"),
+			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
+	@PutMapping(value = "/updatePassword", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<UpdateUserDetailsResponse> updatePassword(
+			@Valid @RequestBody UpdatePasswordRequest updatePasswordRequest) {
+		return updatePasswordCommand.excute(updatePasswordRequest);
 	}
 
 }

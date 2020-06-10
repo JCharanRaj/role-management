@@ -1,7 +1,7 @@
 package com.billdog.user.common;
 
-public class Constants{
-	
+public class Constants {
+
 	public static final String FAILED = "FAILED";
 
 	public static final String SUCCESS = "SUCCESS";
@@ -17,7 +17,7 @@ public class Constants{
 	public static final String NAVIGATION_NOT_FOUND_WITH_ID = "No navigation screen exists with id:: ";
 
 	public static final String NAVIGATION_SCREEN_CREATED = "Navigation screen created successfully..!";
-	
+
 	public static final String ROLE_CREATED = "Role created successfully..!";
 
 	public static final String USER_CREATED = "User created successfully";
@@ -25,4 +25,8 @@ public class Constants{
 	public static final String USER_DETAILS_FETCHED = "User details fetched successfully";
 
 	public static final String USER_UPDATED = "User updated successfully";
+
+	public static final String PASSCODE_VERIFIED_SUCCESSFULLY = "Passcode verified successfully";
+
+	public static final String PASSWORD_UPDATED = "Password updated successfully";
 }

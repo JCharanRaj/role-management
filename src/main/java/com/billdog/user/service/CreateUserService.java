@@ -14,19 +14,26 @@ import org.springframework.stereotype.Service;
 
 import com.billdog.user.common.Constants;
 import com.billdog.user.common.ExceptionalMessages;
+import com.billdog.user.entity.EmailAndPassword;
 import com.billdog.user.entity.NamePrefixMaster;
 import com.billdog.user.entity.Roles;
 import com.billdog.user.entity.SystemUsers;
+import com.billdog.user.entity.VerifyPasscode;
 import com.billdog.user.exception.InValidInputException;
 import com.billdog.user.exception.NoRecordFoundException;
+import com.billdog.user.repository.LoginPasscodeRepository;
 import com.billdog.user.repository.NamePrefixMasterRepository;
 import com.billdog.user.repository.OrganizationRepository;
 import com.billdog.user.repository.RolesRepository;
 import com.billdog.user.repository.SystemUsersrepository;
+import com.billdog.user.repository.UpdatePasswordRepository;
 import com.billdog.user.request.CreateUserRequest;
 import com.billdog.user.request.EditUserDetailsRequest;
 import com.billdog.user.request.SearchUsersRequest;
+import com.billdog.user.request.UpdatePasswordRequest;
+import com.billdog.user.request.VerifyPasscodeRequest;
 import com.billdog.user.response.CreateUserResponse;
+import com.billdog.user.response.LoginResponse;
 import com.billdog.user.response.UpdateUserDetailsResponse;
 import com.billdog.user.response.ViewUsersResponse;
 import com.billdog.user.view.SearchUserDetailsResponse;
@@ -48,6 +55,12 @@ public class CreateUserService {
 
 	@Autowired
 	RolesRepository rolesRepository;
+
+	@Autowired
+	LoginPasscodeRepository loginPasscodeRepository;
+
+	@Autowired
+	UpdatePasswordRepository updatePasswordRepository;
 
 	/**
 	 * @param createUserRequest
@@ -105,7 +118,8 @@ public class CreateUserService {
 	 * @param role
 	 * @return
 	 */
-	public ResponseEntity<UpdateUserDetailsResponse> updateUserDetails(EditUserDetailsRequest editUserDetailsRequest, Roles role) {
+	public ResponseEntity<UpdateUserDetailsResponse> updateUserDetails(EditUserDetailsRequest editUserDetailsRequest,
+			Roles role) {
 		LOGGER.info("edit user details method started..!");
 
 		// This jpa query checks whether the organization is present or not from
@@ -231,6 +245,56 @@ public class CreateUserService {
 		viewResponse.setMessage(Constants.USER_DETAILS_FETCHED);
 		viewResponse.setData(viewUsersResponse);
 		return ResponseEntity.status(HttpStatus.OK).body(viewResponse);
+
+	}
+
+	public ResponseEntity<LoginResponse> verifyPasscode(VerifyPasscodeRequest verifyPasscodeRequest) {
+		LOGGER.info("verify passcode method started..!");
+
+		// This jpa query checks whether the email is exits or not
+
+		Optional<VerifyPasscode> email = loginPasscodeRepository.findByEmail(verifyPasscodeRequest.getEmail());
+		if (!email.isPresent()) {
+			throw new NoRecordFoundException(ExceptionalMessages.PLEASE_ENTER_VALID_EMAIL);
+		}
+
+		// This jpa query checks whether the passcode matched with email sent
+		Optional<VerifyPasscode> loginPasscode = loginPasscodeRepository
+				.findByEmailAndPasscode(verifyPasscodeRequest.getEmail(), verifyPasscodeRequest.getPasscode());
+		if (!loginPasscode.isPresent()) {
+			throw new NoRecordFoundException(ExceptionalMessages.PLEASE_ENTER_VALID_PASSCODE);
+		}
+
+		LoginResponse loginResponse = new LoginResponse();
+		loginResponse.setStatusText(Constants.SUCCESS);
+		loginResponse.setMessage(Constants.PASSCODE_VERIFIED_SUCCESSFULLY);
+		return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
+
+	}
+
+	public ResponseEntity<UpdateUserDetailsResponse> updatePassword(UpdatePasswordRequest updatePasswordRequest) {
+		LOGGER.info("edit user details method started..!");
+
+		// This jpa query checks whether the email is present or not
+		Optional<EmailAndPassword> emailEntity = updatePasswordRepository.findByEmail(updatePasswordRequest.getEmail());
+		if (!emailEntity.isPresent()) {
+			throw new NoRecordFoundException(ExceptionalMessages.EMAIL_NOT_FOUND + updatePasswordRequest.getEmail());
+		}
+
+		// entering into updating password as per request
+		EmailAndPassword email = emailEntity.get();
+		email.setUpdatedAt(LocalDateTime.now());
+		email.setPassword(updatePasswordRequest.getPassword());
+
+		updatePasswordRepository.save(email);
+
+		// providing successful response if password is stores
+		UpdateUserDetailsResponse updateUserDetails = new UpdateUserDetailsResponse();
+		updateUserDetails.setId(email.getId());
+		updateUserDetails.setStatusText(Constants.SUCCESS);
+		updateUserDetails.setMessage(Constants.PASSWORD_UPDATED);
+		LOGGER.info("edit user details method ends..!");
+		return ResponseEntity.status(HttpStatus.OK).body(updateUserDetails);
 
 	}
 
