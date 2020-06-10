@@ -23,6 +23,7 @@ import com.billdog.user.command.GetRoleScreensCommand;
 import com.billdog.user.command.GetRolesCommand;
 import com.billdog.user.command.SearchUsersCommand;
 import com.billdog.user.command.ViewUserDetailsByIdCommand;
+import com.billdog.user.exception.ErrorResponse;
 import com.billdog.user.request.CreateNavigationScreen;
 import com.billdog.user.request.CreateRoleRequest;
 import com.billdog.user.request.CreateUserRequest;
@@ -67,8 +68,8 @@ public class UserRoleController {
 	ViewUserDetailsByIdCommand viewUserDetailsByIdCommand;
 
 	@ApiResponses(value = {
-			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
-			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
+			@ApiResponse(code = HttpServletResponse.SC_OK, response = ViewResponse.class, message = "Role created successfully..!"),
+			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = ErrorResponse.class, message = "Invalid parameters") })
 	@PostMapping(value = "/roles", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<ViewResponse> createRole(@Valid @RequestBody CreateRoleRequest createRole) {
 
@@ -76,8 +77,8 @@ public class UserRoleController {
 	}
 
 	@ApiResponses(value = {
-			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
-			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
+			@ApiResponse(code = HttpServletResponse.SC_OK, response = ViewResponse.class, message = "Roles are fetched successfully..!"),
+			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = ErrorResponse.class, message = "Invalid parameters") })
 	@GetMapping(value = "/{userId}/roles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<ViewResponse> getRoles(@PathVariable long userId) {
 
@@ -85,8 +86,8 @@ public class UserRoleController {
 	}
 
 	@ApiResponses(value = {
-			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
-			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
+			@ApiResponse(code = HttpServletResponse.SC_OK, response = ViewResponse.class, message = "Generate OTP"),
+			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = ErrorResponse.class, message = "Invalid parameters") })
 	@PostMapping(value = "/navigationscreens", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<ViewResponse> getRoleScreens(@Valid @RequestBody GetRoleScreens getRoleScreens) {
 
@@ -115,7 +116,8 @@ public class UserRoleController {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user created successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
 	@PostMapping(value = "/navigationScreen", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<ViewResponse> createUserNavigation(
+
+	public ResponseEntity<ViewResponse> createNavigationScreen(
 			@Valid @RequestBody CreateNavigationScreen createNavigationScreen) {
 		return createNavigationScreenCommand.excute(createNavigationScreen);
 	}

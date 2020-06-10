@@ -105,7 +105,8 @@ public class CreateUserService {
 	 * @param role
 	 * @return
 	 */
-	public ResponseEntity<UpdateUserDetailsResponse> updateUserDetails(EditUserDetailsRequest editUserDetailsRequest, Roles role) {
+	public ResponseEntity<UpdateUserDetailsResponse> updateUserDetails(EditUserDetailsRequest editUserDetailsRequest,
+			Roles role) {
 		LOGGER.info("edit user details method started..!");
 
 		// This jpa query checks whether the organization is present or not from
