@@ -7,24 +7,25 @@ import javax.validation.constraints.Pattern;
 
 public class CreateUserRequest {
 
-	@NotBlank(message = "First name is mandatory")
+	@NotBlank(message = "Please enter First name")
 	private String firstName;
-	@NotBlank(message = "First name is mandatory")
+	@NotBlank(message = "Please enter Last name")
 	private String lastName;
 
 	private String middleName;
 
+	@NotBlank(message = "Please enter Email")
 	@Email(message = "Invalid email format")
 	private String email;
 
-	@NotBlank(message = "Mobile numnber is mandatory")
+	@NotBlank(message = "Please enter Mobile Number")
 	@Pattern(regexp = "^(0|[1-9][0-9]*)$", message = "Invalid mobile number")
 	private String mobileNumber;
 	
-	@NotNull(message = "Roleid must not be null")
+	@NotNull(message = "RoleId must not be null")
 	private long roleId;
 	
-	@NotNull(message = "Userid must not be null")
+	@NotNull(message = "UserId must not be null")
 	private long userId;
 
 	public String getMiddleName() {

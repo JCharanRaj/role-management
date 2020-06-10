@@ -25,7 +25,8 @@ import com.billdog.user.request.CreateRoleRequest;
 import com.billdog.user.request.CreateUserRequest;
 import com.billdog.user.request.EditUserDetailsRequest;
 import com.billdog.user.request.SearchUsersRequest;
-import com.billdog.user.response.LoginResponse;
+import com.billdog.user.response.CreateUserResponse;
+import com.billdog.user.response.UpdateUserDetailsResponse;
 import com.billdog.user.view.ViewResponse;
 
 import io.swagger.annotations.ApiResponse;
@@ -77,15 +78,15 @@ public class UserRoleController {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user created successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
 	@PostMapping(value = "/createUser", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public LoginResponse createUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
+	public CreateUserResponse createUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
 		return createUserCommand.excute(createUserRequest);
 	}
 
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user updated successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
-	@PutMapping(value = "/editUserDetails",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,  produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public LoginResponse editUserDetails(@Valid @RequestBody EditUserDetailsRequest editUserDetailsRequest) {
+	@PutMapping(value = "/updateUser",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,  produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public UpdateUserDetailsResponse editUserDetails(@Valid @RequestBody EditUserDetailsRequest editUserDetailsRequest) {
 		return editUserDetailsCommand.excute(editUserDetailsRequest);
 	}
 	
@@ -93,7 +94,7 @@ public class UserRoleController {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user created successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
 	@PostMapping(value = "/navigationScreen", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<ViewResponse> createUser(@Valid @RequestBody CreateNavigationScreen createNavigationScreen) {
+	public ResponseEntity<ViewResponse> createUserNavigation(@Valid @RequestBody CreateNavigationScreen createNavigationScreen) {
 		return createNavigationScreenCommand.excute(createNavigationScreen);
 	}
 

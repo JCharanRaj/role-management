@@ -18,4 +18,10 @@ public class Constants{
 	public static final String NAVIGATION_SCREEN_CREATED = "Navigation screen created successfully..!";
 	
 	public static final String ROLE_CREATED = "Role created successfully..!";
+
+	public static final String USER_CREATED = "User created successfully";
+
+	public static final String USER_UPDATED = "User updated successfully";
+
+	public static final String USER_DETAILS_FETCHED = "User details fetched successfully";
 }

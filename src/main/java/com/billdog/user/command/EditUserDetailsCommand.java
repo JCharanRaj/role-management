@@ -11,11 +11,11 @@ import com.billdog.user.repository.OrganizationRepository;
 import com.billdog.user.repository.RolesRepository;
 import com.billdog.user.repository.SystemUsersrepository;
 import com.billdog.user.request.EditUserDetailsRequest;
-import com.billdog.user.response.LoginResponse;
+import com.billdog.user.response.UpdateUserDetailsResponse;
 import com.billdog.user.service.CreateUserService;
 
 @Service
-public class EditUserDetailsCommand implements Command<EditUserDetailsRequest, LoginResponse> {
+public class EditUserDetailsCommand implements Command<EditUserDetailsRequest, UpdateUserDetailsResponse> {
 
 	@Autowired
 	CreateUserService createUserService;
@@ -30,13 +30,13 @@ public class EditUserDetailsCommand implements Command<EditUserDetailsRequest, L
 	SystemUsersrepository systemUsersrepository;
 
 	@Override
-	public LoginResponse excute(EditUserDetailsRequest editUserDetailsRequest) {
+	public UpdateUserDetailsResponse excute(EditUserDetailsRequest editUserDetailsRequest) {
 
 		Optional<Roles> role = rolesRepository.findById(editUserDetailsRequest.getRoleId());
 		if (!role.isPresent()) {
 			throw new NoRecordFoundException("roleID not found with " + editUserDetailsRequest.getRoleId());
 		}
-		return createUserService.editUserDetails(editUserDetailsRequest, role.get());
+		return createUserService.updateUserDetails(editUserDetailsRequest, role.get());
 
 	}
 
