@@ -30,6 +30,7 @@ import com.billdog.user.request.CreateRoleRequest;
 import com.billdog.user.request.CreateUserRequest;
 import com.billdog.user.request.EditUserDetailsRequest;
 import com.billdog.user.request.GetRoleScreens;
+import com.billdog.user.request.GetUserRequest;
 import com.billdog.user.request.SearchUsersRequest;
 import com.billdog.user.request.UpdatePasswordRequest;
 import com.billdog.user.request.VerifyPasscodeRequest;
@@ -142,10 +143,10 @@ public class UserRoleController {
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "User details fetched successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
-	@GetMapping(value = "/{userId}/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<ViewResponse> getUser(@PathVariable long userId) {
+	@PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<ViewResponse> getUser(@Valid @RequestBody GetUserRequest getUserRequest) {
 
-		return viewUserDetailsByIdCommand.excute(userId);
+		return viewUserDetailsByIdCommand.excute(getUserRequest);
 	}
 
 	@ApiResponses(value = {

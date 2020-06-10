@@ -29,6 +29,7 @@ import com.billdog.user.repository.SystemUsersrepository;
 import com.billdog.user.repository.UpdatePasswordRepository;
 import com.billdog.user.request.CreateUserRequest;
 import com.billdog.user.request.EditUserDetailsRequest;
+import com.billdog.user.request.GetUserRequest;
 import com.billdog.user.request.SearchUsersRequest;
 import com.billdog.user.request.UpdatePasswordRequest;
 import com.billdog.user.request.VerifyPasscodeRequest;
@@ -213,14 +214,19 @@ public class CreateUserService {
 
 	}
 
-	public ResponseEntity<ViewResponse> getUserById(Long userId) {
+	public ResponseEntity<ViewResponse> getUserById(GetUserRequest getUserRequest) {
 		LOGGER.info("edit user details method started..!");
 
-		// This jpa query checks whether the organization is present or not from
-		// systemUser table
-		Optional<SystemUsers> sysUser = systemUsersrepository.findById(userId);
+		
+		Optional<SystemUsers> userEntity = systemUsersrepository.findById(getUserRequest.getId());
+		if (!userEntity.isPresent()) {
+			throw new NoRecordFoundException(ExceptionalMessages.USER_NOT_FOUND + getUserRequest.getUserId());
+		}
+		
+		// This jpa query checks whether the user is present or not 
+		Optional<SystemUsers> sysUser = systemUsersrepository.findById(getUserRequest.getUserId());
 		if (!sysUser.isPresent()) {
-			throw new NoRecordFoundException(ExceptionalMessages.USER_NOT_FOUND + userId);
+			throw new NoRecordFoundException(ExceptionalMessages.USER_NOT_FOUND + getUserRequest.getUserId());
 		}
 
 		// This jpa query checks whether the role is present or not from role table
