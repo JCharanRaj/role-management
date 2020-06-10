@@ -10,6 +10,7 @@ public class EditUserDetailsRequest {
 	private long id;
 	@NotBlank(message = "First name is mandatory")
 	private String firstName;
+	
 	@NotBlank(message = "First name is mandatory")
 	private String lastName;
 
