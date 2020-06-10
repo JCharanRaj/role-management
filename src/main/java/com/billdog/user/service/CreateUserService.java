@@ -49,7 +49,7 @@ public class CreateUserService {
 
 		Optional<SystemUsers> sysUser = systemUsersrepository.findById(createUserRequest.getUserId());
 		if (!sysUser.isPresent()) {
-			throw new NoRecordFoundException("Organization not found with Id " + createUserRequest.getUserId());
+			throw new InValidInputException(ExceptionalMessages.USER_NOT_FOUND + createUserRequest.getUserId());
 		}
 		Optional<NamePrefixMaster> namePrefixMaster = namePrefixMasterRepository.findById((long) 1);
 		if (!namePrefixMaster.isPresent()) {
@@ -58,7 +58,7 @@ public class CreateUserService {
 
 		Optional<Roles> role = rolesRepository.findById(createUserRequest.getRoleId());
 		if (!role.isPresent()) {
-			throw new InValidInputException(ExceptionalMessages.ROLE_NOT_FOUND+ createUserRequest.getRoleId());
+			throw new InValidInputException(ExceptionalMessages.ROLE_NOT_FOUND + createUserRequest.getRoleId());
 		}
 
 		SystemUsers systemUsers = new SystemUsers();

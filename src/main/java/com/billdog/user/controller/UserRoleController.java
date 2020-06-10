@@ -27,8 +27,8 @@ import com.billdog.user.request.CreateNavigationScreen;
 import com.billdog.user.request.CreateRoleRequest;
 import com.billdog.user.request.CreateUserRequest;
 import com.billdog.user.request.EditUserDetailsRequest;
-import com.billdog.user.request.SearchUsersRequest;
 import com.billdog.user.request.GetRoleScreens;
+import com.billdog.user.request.SearchUsersRequest;
 import com.billdog.user.response.LoginResponse;
 import com.billdog.user.view.ViewResponse;
 
