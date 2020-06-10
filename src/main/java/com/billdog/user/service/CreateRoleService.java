@@ -12,11 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.billdog.user.common.Constants;
+import com.billdog.user.common.StatusConstants;
 import com.billdog.user.entity.NavigationScreen;
 import com.billdog.user.entity.RoleNavigationScreens;
 import com.billdog.user.entity.Roles;
 import com.billdog.user.entity.SystemUsers;
 import com.billdog.user.exception.InValidInputException;
+import com.billdog.user.exception.RecordExistsException;
 import com.billdog.user.repository.NamePrefixMasterRepository;
 import com.billdog.user.repository.NavigationScreenRepository;
 import com.billdog.user.repository.OrganizationRepository;
@@ -49,6 +51,9 @@ public class CreateRoleService {
 	@Autowired
 	NavigationScreenRepository navigationScreenRepository;
 
+	/*
+	 * create role method takes userid, role name and created a new record and provides response.
+	 */
 	public ResponseEntity<ViewResponse> createRole(CreateRoleRequest createRoleRequest) {
 		LOGGER.info("create role method started..!");
 
@@ -56,13 +61,18 @@ public class CreateRoleService {
 		if (!userOptional.isPresent()) {
 			throw new InValidInputException("user id not found with " + createRoleRequest.getUserId());
 		}
+		
+		Optional<Roles> roleOpt = rolesRepository.findByRoleAndOrganizationId(createRoleRequest.getName(),userOptional.get().getOrganzationId());
+		if (roleOpt.isPresent()) {
+			throw new RecordExistsException("This role is already exists");
+		}		
 
 		Roles role = new Roles();
 		role.setCreatedAt(LocalDateTime.now());
 		role.setUpdatedAt(LocalDateTime.now());
 		role.setOrganizationId(userOptional.get().getOrganzationId());
 		role.setRole(createRoleRequest.getName());
-		role.setStatus("ACTIVE");
+		role.setStatus(StatusConstants.ACTIVE);
 		rolesRepository.save(role);
 		mapScreenswithRole(role);
 
@@ -76,7 +86,7 @@ public class CreateRoleService {
 
 	private void mapScreenswithRole(Roles role) {
 		LOGGER.info("Mapping role with navigations screens");
-		List<NavigationScreen> screens = navigationScreenRepository.findAll();
+		List<NavigationScreen> screens = navigationScreenRepository.findByOrganizationId(role.getOrganizationId());
 
 		List<RoleNavigationScreens> roleNavigationScreens = new ArrayList<>();
 		screens.forEach(screen -> {
@@ -91,7 +101,7 @@ public class CreateRoleService {
 			roleNavigationScreens.add(roleNavigationScreen);
 		});
 		roleNavigationScreensRepository.saveAll(roleNavigationScreens);
-		LOGGER.info("Role is mapped woth navigations screens");
+		LOGGER.info("Role is mapped with navigations screens");
 	}
 
 }

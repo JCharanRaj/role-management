@@ -1,6 +1,7 @@
 package com.billdog.user.common;
 
 public class Constants{
+	
 	public static final String FAILED = "FAILED";
 
 	public static final String SUCCESS = "SUCCESS";
@@ -21,7 +22,7 @@ public class Constants{
 
 	public static final String USER_CREATED = "User created successfully";
 
-	public static final String USER_UPDATED = "User updated successfully";
-
 	public static final String USER_DETAILS_FETCHED = "User details fetched successfully";
+
+	public static final String USER_UPDATED = "User updated successfully";
 }
