@@ -21,10 +21,10 @@ public class CreateUserRequest {
 	@NotBlank(message = "Please enter Mobile Number")
 	@Pattern(regexp = "^(0|[1-9][0-9]*)$", message = "Invalid mobile number")
 	private String mobileNumber;
-	
+
 	@NotNull(message = "RoleId must not be null")
 	private long roleId;
-	
+
 	@NotNull(message = "UserId must not be null")
 	private long userId;
 

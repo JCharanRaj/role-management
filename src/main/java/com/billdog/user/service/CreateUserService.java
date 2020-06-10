@@ -8,9 +8,12 @@ import java.util.Optional;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.billdog.user.common.Constants;
+import com.billdog.user.common.ExceptionalMessages;
 import com.billdog.user.entity.NamePrefixMaster;
 import com.billdog.user.entity.Roles;
 import com.billdog.user.entity.SystemUsers;
@@ -25,6 +28,7 @@ import com.billdog.user.request.EditUserDetailsRequest;
 import com.billdog.user.request.SearchUsersRequest;
 import com.billdog.user.response.CreateUserResponse;
 import com.billdog.user.response.UpdateUserDetailsResponse;
+import com.billdog.user.response.ViewUsersResponse;
 import com.billdog.user.view.SearchUserDetailsResponse;
 import com.billdog.user.view.ViewResponse;
 
@@ -49,14 +53,14 @@ public class CreateUserService {
 	 * @param createUserRequest
 	 * @return
 	 */
-	public CreateUserResponse createUser(CreateUserRequest createUserRequest) {
+	public ResponseEntity<CreateUserResponse> createUser(CreateUserRequest createUserRequest) {
 		LOGGER.info("create user method started..!");
 
 		// This jpa query checks whether the organization is present or not from
 		// systemUser table
 		Optional<SystemUsers> sysUser = systemUsersrepository.findById(createUserRequest.getUserId());
 		if (!sysUser.isPresent()) {
-			throw new NoRecordFoundException("Organization not found with Id " + createUserRequest.getUserId());
+			throw new NoRecordFoundException(ExceptionalMessages.USER_NOT_FOUND + createUserRequest.getUserId());
 		}
 
 		// This jpa query checks whether the prefix is present or not from prefixMaster
@@ -69,7 +73,7 @@ public class CreateUserService {
 		// This jpa query checks whether the role is present or not from roles table
 		Optional<Roles> role = rolesRepository.findById(createUserRequest.getRoleId());
 		if (!role.isPresent()) {
-			throw new NoRecordFoundException("roleId not found with " + createUserRequest.getRoleId());
+			throw new NoRecordFoundException(ExceptionalMessages.ROLE_NOT_FOUND + createUserRequest.getRoleId());
 		}
 
 		// entering into creating new user
@@ -92,7 +96,7 @@ public class CreateUserService {
 		createUserResponse.setStatusText(Constants.SUCCESS);
 		createUserResponse.setMessage(Constants.USER_CREATED);
 		LOGGER.info("create user method ends..!");
-		return createUserResponse;
+		return ResponseEntity.status(HttpStatus.OK).body(createUserResponse);
 
 	}
 
@@ -101,27 +105,27 @@ public class CreateUserService {
 	 * @param role
 	 * @return
 	 */
-	public UpdateUserDetailsResponse updateUserDetails(EditUserDetailsRequest editUserDetailsRequest, Roles role) {
+	public ResponseEntity<UpdateUserDetailsResponse> updateUserDetails(EditUserDetailsRequest editUserDetailsRequest, Roles role) {
 		LOGGER.info("edit user details method started..!");
 
 		// This jpa query checks whether the organization is present or not from
 		// systemUser table
 		Optional<SystemUsers> sysUser = systemUsersrepository.findById(editUserDetailsRequest.getUserId());
 		if (!sysUser.isPresent()) {
-			throw new NoRecordFoundException("Organization not found with Id " + editUserDetailsRequest.getUserId());
+			throw new NoRecordFoundException(ExceptionalMessages.USER_NOT_FOUND + editUserDetailsRequest.getUserId());
 		}
 
 		// This jpa query checks whether the user is present or not from systemUser
 		// table
 		Optional<SystemUsers> systemUserEntity = systemUsersrepository.findById(editUserDetailsRequest.getId());
 		if (!systemUserEntity.isPresent()) {
-			throw new NoRecordFoundException("User not found with id " + editUserDetailsRequest.getId());
+			throw new NoRecordFoundException(ExceptionalMessages.USER_NOT_FOUND + editUserDetailsRequest.getId());
 		}
 
 		// This condition checks whether the user's organization and updating user
 		// organization is same or not from systemUser table
 		if (systemUserEntity.get().getOrganzationId().getId() != sysUser.get().getOrganzationId().getId()) {
-			throw new InValidInputException("this user does not belong to same organization");
+			throw new InValidInputException(ExceptionalMessages.THIS_USER_DOES_NOT_BELONG_TO_SAME_ORGANIZATION);
 		}
 
 		// entering into updating user as per request
@@ -141,7 +145,7 @@ public class CreateUserService {
 		updateUserDetails.setStatusText(Constants.SUCCESS);
 		updateUserDetails.setMessage(Constants.USER_UPDATED);
 		LOGGER.info("edit user details method ends..!");
-		return updateUserDetails;
+		return ResponseEntity.status(HttpStatus.OK).body(updateUserDetails);
 
 	}
 
@@ -149,7 +153,7 @@ public class CreateUserService {
 	 * @param searchUsersRequest
 	 * @return
 	 */
-	public ViewResponse searchUsers(SearchUsersRequest searchUsersRequest) {
+	public ResponseEntity<ViewResponse> searchUsers(SearchUsersRequest searchUsersRequest) {
 		LOGGER.info("search user details method started..!");
 
 		// creating arraylist for response class
@@ -191,7 +195,42 @@ public class CreateUserService {
 		response.setMessage(Constants.USER_DETAILS_FETCHED);
 		response.setData(viewUserDetailsResponseList);
 
-		return response;
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+
+	}
+
+	public ResponseEntity<ViewResponse> getUserById(Long userId) {
+		LOGGER.info("edit user details method started..!");
+
+		// This jpa query checks whether the organization is present or not from
+		// systemUser table
+		Optional<SystemUsers> sysUser = systemUsersrepository.findById(userId);
+		if (!sysUser.isPresent()) {
+			throw new NoRecordFoundException(ExceptionalMessages.USER_NOT_FOUND + userId);
+		}
+
+		// This jpa query checks whether the role is present or not from role table
+		Optional<Roles> role = rolesRepository.findById(sysUser.get().getRoleId().getId());
+		if (!role.isPresent()) {
+			throw new NoRecordFoundException(ExceptionalMessages.ROLE_NOT_FOUND + sysUser.get().getRoleId().getId());
+		}
+
+		// entering into assigning values respectively
+		ViewUsersResponse viewUsersResponse = new ViewUsersResponse();
+		SystemUsers user = sysUser.get();
+		viewUsersResponse.setFirstName(user.getFirstName());
+		viewUsersResponse.setLastName(user.getLastName());
+		viewUsersResponse.setMiddleName(user.getMiddleName());
+		viewUsersResponse.setEmail(user.getEmail());
+		viewUsersResponse.setMobileNumber(user.getMobileNumber());
+		viewUsersResponse.setRole(role.get().getRole());
+		viewUsersResponse.setId(user.getId());
+
+		ViewResponse viewResponse = new ViewResponse();
+		viewResponse.setStatusText(Constants.SUCCESS);
+		viewResponse.setMessage(Constants.USER_DETAILS_FETCHED);
+		viewResponse.setData(viewUsersResponse);
+		return ResponseEntity.status(HttpStatus.OK).body(viewResponse);
 
 	}
 

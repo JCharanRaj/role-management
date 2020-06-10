@@ -22,6 +22,7 @@ import com.billdog.user.command.EditUserDetailsCommand;
 import com.billdog.user.command.GetRoleScreensCommand;
 import com.billdog.user.command.GetRolesCommand;
 import com.billdog.user.command.SearchUsersCommand;
+import com.billdog.user.command.ViewUserDetailsByIdCommand;
 import com.billdog.user.request.CreateNavigationScreen;
 import com.billdog.user.request.CreateRoleRequest;
 import com.billdog.user.request.CreateUserRequest;
@@ -62,6 +63,9 @@ public class UserRoleController {
 	@Autowired
 	SearchUsersCommand searchUsersCommand;
 
+	@Autowired
+	ViewUserDetailsByIdCommand viewUserDetailsByIdCommand;
+
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
@@ -93,7 +97,8 @@ public class UserRoleController {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user created successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
 	@PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public CreateUserResponse createUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
+	public ResponseEntity<CreateUserResponse> createUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
+
 		return createUserCommand.excute(createUserRequest);
 	}
 
@@ -101,7 +106,7 @@ public class UserRoleController {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user updated successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
 	@PutMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public UpdateUserDetailsResponse editUserDetails(
+	public ResponseEntity<UpdateUserDetailsResponse> editUserDetails(
 			@Valid @RequestBody EditUserDetailsRequest editUserDetailsRequest) {
 		return editUserDetailsCommand.excute(editUserDetailsRequest);
 	}
@@ -119,8 +124,17 @@ public class UserRoleController {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user details fetched successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
 	@PostMapping(value = "/searchUsers", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ViewResponse searchUsers(@RequestBody SearchUsersRequest searchUsersRequest) {
+	public ResponseEntity<ViewResponse> searchUsers(@RequestBody SearchUsersRequest searchUsersRequest) {
 		return searchUsersCommand.excute(searchUsersRequest);
+	}
+
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "User details fetched successfully"),
+			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
+	@GetMapping(value = "/{userId}/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<ViewResponse> getUser(@PathVariable long userId) {
+
+		return viewUserDetailsByIdCommand.excute(userId);
 	}
 
 }
