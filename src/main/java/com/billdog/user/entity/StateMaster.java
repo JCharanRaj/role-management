@@ -11,18 +11,18 @@ import javax.persistence.Table;
 public class StateMaster extends BaseEntity{
 
 
-	@Column(name = "state_name",columnDefinition = "NVARCHAR(45)")
+	@Column(name = "STATE_NAME",columnDefinition = "NVARCHAR(45)")
 	private String name;
 	
 
-	@Column(name = "state_code",columnDefinition = "NVARCHAR(45)")
+	@Column(name = "STATE_CODE",columnDefinition = "NVARCHAR(45)")
 	private String code;	
 
-	@Column(name = "status",columnDefinition = "NVARCHAR(45)")
+	@Column(name = "STATUS",columnDefinition = "NVARCHAR(45)")
 	private String status;	
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
+	@JoinColumn(name = "ORGANIZATION_ID")
 	private Organization organizationId;
 
 	public String getName() {

@@ -10,21 +10,21 @@ import javax.persistence.Table;
 @Table(name = "member_email")
 public class MemberEmail extends BaseEntity {
 
-	@Column(name = "email", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "EMAIL", columnDefinition = "NVARCHAR(250)")
 	private String email;
 
-	@Column(name = "is_primary")
+	@Column(name = "IS_PRIMARY")
 	private long isPrimary;
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
-	private Organization organsation_id;
+	@JoinColumn(name = "ORGANIZATION_ID")
+	private Organization organizationId;
 
 	@ManyToOne
-	@JoinColumn(name = "member_member_id")
+	@JoinColumn(name = "MEMBER_MEMBER_ID")
 	private Member memberMemberId;
 
-	@Column(name = "password", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "PASSWORD", columnDefinition = "NVARCHAR(250)")
 	private String password;
 
 	public String getEmail() {
@@ -43,12 +43,13 @@ public class MemberEmail extends BaseEntity {
 		this.isPrimary = isPrimary;
 	}
 
-	public Organization getOrgansation_id() {
-		return organsation_id;
+
+	public Organization getOrganizationId() {
+		return organizationId;
 	}
 
-	public void setOrgansation_id(Organization organsation_id) {
-		this.organsation_id = organsation_id;
+	public void setOrganizationId(Organization organizationId) {
+		this.organizationId = organizationId;
 	}
 
 	public Member getMemberMemberId() {

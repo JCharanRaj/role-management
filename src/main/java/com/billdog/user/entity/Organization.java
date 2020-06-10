@@ -9,16 +9,16 @@ import javax.persistence.Table;
 @Table(name = "organization")
 public class Organization extends BaseEntity{
 
-	@Column(name = "organization_name",columnDefinition = "NVARCHAR(250)")
+	@Column(name = "NAME",columnDefinition = "NVARCHAR(250)")
 	private String name;
 	
-	@Column(name = "status",columnDefinition = "NVARCHAR(250)")
+	@Column(name = "STATUS",columnDefinition = "NVARCHAR(250)")
 	private String status;
 
-	@Column(name = "phone_number",columnDefinition = "NVARCHAR(250)")
+	@Column(name = "PHONE_NUMBER",columnDefinition = "NVARCHAR(250)")
 	private String phoneNumber;	
 
-	@Column(name = "fax_number",columnDefinition = "NVARCHAR(250)")
+	@Column(name = "FAX_NUMBER",columnDefinition = "NVARCHAR(250)")
 	private String faxNumber;
 
 	public String getName() {

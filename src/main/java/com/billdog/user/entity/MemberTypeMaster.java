@@ -12,13 +12,13 @@ public class MemberTypeMaster extends BaseEntity{
 
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
+	@JoinColumn(name = "ORGANIZATION_ID")
 	private Organization organizationId;	
 	
-	@Column(name = "member_types_name",columnDefinition = "NVARCHAR(250)")
+	@Column(name = "MEMBER_TYPES_NAME",columnDefinition = "NVARCHAR(250)")
 	private String typeName;	
 
-	@Column(name = "status",columnDefinition = "NVARCHAR(250)")
+	@Column(name = "STATUS",columnDefinition = "NVARCHAR(250)")
 	private String status;
 
 	public Organization getOrganizationId() {

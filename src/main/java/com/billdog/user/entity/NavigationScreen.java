@@ -11,19 +11,19 @@ import javax.persistence.Table;
 public class NavigationScreen extends BaseEntity{
 	
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
+	@JoinColumn(name = "ORGANIZATION_ID")
 	private Organization organizationId;	
 	
-	@Column(name = "name",columnDefinition = "NVARCHAR(250)")
+	@Column(name = "NAME",columnDefinition = "NVARCHAR(250)")
 	private String name;	
 	
-	@Column(name = "url",columnDefinition = "NVARCHAR(250) default '#'")
+	@Column(name = "URL",columnDefinition = "NVARCHAR(250) default '#'")
 	private String url;	
 
-	@Column(name = "parent_id", columnDefinition = "bigint(20) default 0")
+	@Column(name = "PARENT_ID", columnDefinition = "bigint(20) default 0")
 	private long parent_id;
 	
-	@Column(name = "display_order", columnDefinition = "bigint(20) default 0")
+	@Column(name = "DISPLAY_ORDER", columnDefinition = "bigint(20) default 0")
 	private long displayOrder;
 
 	public Organization getOrganizationId() {

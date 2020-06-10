@@ -12,28 +12,28 @@ public class MemberInsuranceDetails extends BaseEntity{
 
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
+	@JoinColumn(name = "ORGANIZATION_ID")
 	private Organization organizationId;	
 
 	@ManyToOne
-	@JoinColumn(name = "member_id")
+	@JoinColumn(name = "MEMBER_ID")
 	private Member memberId;	
 	
-	@Column(name = "insurance_type_name",columnDefinition = "NVARCHAR(250)")
+	@Column(name = "INSURANCE_TYPE_NAME",columnDefinition = "NVARCHAR(250)")
 	private String typeName;	
 
 	
-	@Column(name = "pcp", columnDefinition = "integer default 0")
+	@Column(name = "PCP", columnDefinition = "integer default 0")
 	private int pcp;	
 
-	@Column(name = "spec", columnDefinition = "integer default 0")
+	@Column(name = "SPEC", columnDefinition = "integer default 0")
 	private int spec;
 	
 
-	@Column(name = "er", columnDefinition = "integer default 0")
+	@Column(name = "ER", columnDefinition = "integer default 0")
 	private int er;	
 
-	@Column(name = "ded", columnDefinition = "integer default 0")
+	@Column(name = "DED", columnDefinition = "integer default 0")
 	private int ded;
 
 	public Organization getOrganizationId() {

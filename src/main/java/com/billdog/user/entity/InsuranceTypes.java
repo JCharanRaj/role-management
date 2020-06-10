@@ -12,13 +12,13 @@ public class InsuranceTypes extends BaseEntity{
 
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
+	@JoinColumn(name = "ORGANIZATION_ID")
 	private Organization organizationId;	
 	
-	@Column(name = "insurance_type_name",columnDefinition = "NVARCHAR(250)")
+	@Column(name = "INSURANCE_TYPE_NAME",columnDefinition = "NVARCHAR(250)")
 	private String name;	
 
-	@Column(name = "status",columnDefinition = "NVARCHAR(45)")
+	@Column(name = "STATUS",columnDefinition = "NVARCHAR(45)")
 	private String status;
 
 	public Organization getOrganizationId() {

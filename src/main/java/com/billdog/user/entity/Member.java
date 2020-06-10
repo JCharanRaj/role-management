@@ -12,53 +12,42 @@ import javax.persistence.Table;
 @Table(name = "member")
 public class Member extends BaseEntity {
 
-	@Column(name = "member_id")
-	private long memberId;
-
-	@Column(name = "first_name", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "FIRST_NAME", columnDefinition = "NVARCHAR(250)")
 	private String firstName;
 
-	@Column(name = "middle_name", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "MIDDLE_NAME", columnDefinition = "NVARCHAR(250)")
 	private String middleName;
 
-	@Column(name = "last_name", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "LAST_NAME", columnDefinition = "NVARCHAR(250)")
 	private String lastName;
 
-	@Column(name = "status", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "STATUS", columnDefinition = "NVARCHAR(250)")
 	private String status;
 
-	@Column(name = "sfdc_updated_time")
+	@Column(name = "SFDC_UPDATED_TIME")
 	private LocalDateTime sfdcUpdatedTime;
 
-	@Column(name = "locked")
+	@Column(name = "LOCKED")
 	private long locked;
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
-	private Organization organsation_id;
+	@JoinColumn(name = "ORGANIZATION_ID")
+	private Organization organizationId;
 
 	@ManyToOne
-	@JoinColumn(name = "member_type_master_id")
+	@JoinColumn(name = "MEMBER_TYPE_MASTER_ID")
 	private MemberTypeMaster memberTypeMasterId;
 
-	@Column(name = "phone_number")
+	@Column(name = "PHONE_NUMBER")
 	private long phoneNumber;
 
 	@ManyToOne
-	@JoinColumn(name = "country_phone_code_master_id")
+	@JoinColumn(name = "COUNTRY_PHONE_CODE_MASTER_ID")
 	private CountryPhoneCodeMaster countryPhoneCodeMasterId;
 
 	@ManyToOne
-	@JoinColumn(name = "name_prefix_master_id")
+	@JoinColumn(name = "NAME_PREFIX_MASTER_ID")
 	private NamePrefixMaster namePrefixMasterId;
-
-	public long getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(long memberId) {
-		this.memberId = memberId;
-	}
 
 	public String getFirstName() {
 		return firstName;
@@ -116,12 +105,13 @@ public class Member extends BaseEntity {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Organization getOrgansation_id() {
-		return organsation_id;
+
+	public Organization getOrganizationId() {
+		return organizationId;
 	}
 
-	public void setOrgansation_id(Organization organsation_id) {
-		this.organsation_id = organsation_id;
+	public void setOrganizationId(Organization organizationId) {
+		this.organizationId = organizationId;
 	}
 
 	public MemberTypeMaster getMemberTypeMasterId() {

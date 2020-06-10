@@ -10,22 +10,22 @@ import javax.persistence.Table;
 @Table(name = "member_address")
 public class MemberAddress extends BaseEntity {
 
-	@Column(name = "street", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "STREET", columnDefinition = "NVARCHAR(250)")
 	private String street;
 
-	@Column(name = "city_name", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "CITY_NAME", columnDefinition = "NVARCHAR(250)")
 	private String cityName;
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
-	private Organization organsation_id;
+	@JoinColumn(name = "ORGANIZATION_ID")
+	private Organization organizationId;
 
 	@ManyToOne
-	@JoinColumn(name = "state_master_id")
+	@JoinColumn(name = "STATE_MASTER_ID")
 	private StateMaster stateMasterId;
 
 	@ManyToOne
-	@JoinColumn(name = "country_master_id")
+	@JoinColumn(name = "COUNTRY_MASTER_ID")
 	private CountryMaster countryMasterId;
 
 	public String getStreet() {
@@ -42,14 +42,14 @@ public class MemberAddress extends BaseEntity {
 
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
+	}	
+
+	public Organization getOrganizationId() {
+		return organizationId;
 	}
 
-	public Organization getOrgansation_id() {
-		return organsation_id;
-	}
-
-	public void setOrgansation_id(Organization organsation_id) {
-		this.organsation_id = organsation_id;
+	public void setOrganizationId(Organization organizationId) {
+		this.organizationId = organizationId;
 	}
 
 	public StateMaster getStateMasterId() {

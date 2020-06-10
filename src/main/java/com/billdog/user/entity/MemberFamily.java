@@ -10,16 +10,16 @@ import javax.persistence.Table;
 public class MemberFamily extends BaseEntity {
 
 	@ManyToOne
-	@JoinColumn(name = "relationship_master_id")
+	@JoinColumn(name = "RELATIONSHIP_MASTER_ID")
 	private RelationshipMaster relationShipMasterId;
 
 	@ManyToOne
-	@JoinColumn(name = "member_member_id")
-	private Member memberMemberId;
+	@JoinColumn(name = "MEMBER_ID")
+	private Member memberId;
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
-	private Organization organsation_id;
+	@JoinColumn(name = "ORGANIZATION_ID")
+	private Organization organizationId;
 
 	public RelationshipMaster getRelationShipMasterId() {
 		return relationShipMasterId;
@@ -29,20 +29,21 @@ public class MemberFamily extends BaseEntity {
 		this.relationShipMasterId = relationShipMasterId;
 	}
 
-	public Member getMemberMemberId() {
-		return memberMemberId;
+	public Member getMemberId() {
+		return memberId;
 	}
 
-	public void setMemberMemberId(Member memberMemberId) {
-		this.memberMemberId = memberMemberId;
+	public void setMemberId(Member memberId) {
+		this.memberId = memberId;
 	}
 
-	public Organization getOrgansation_id() {
-		return organsation_id;
+	public Organization getOrganizationId() {
+		return organizationId;
 	}
 
-	public void setOrgansation_id(Organization organsation_id) {
-		this.organsation_id = organsation_id;
+	public void setOrganizationId(Organization organizationId) {
+		this.organizationId = organizationId;
 	}
+	
 
 }

@@ -11,21 +11,21 @@ import javax.persistence.Table;
 public class RoleNavigationScreens extends BaseEntity {
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
+	@JoinColumn(name = "ORGANIZATION_ID")
 	private Organization organizationId;
 
 	@ManyToOne
-	@JoinColumn(name = "role_id")
+	@JoinColumn(name = "ROLE_ID")
 	private Roles roleId;
 
 	@ManyToOne
-	@JoinColumn(name = "navigation_screens_access_id")
+	@JoinColumn(name = "NAVIGATION_SCREENS_ACCESS_ID")
 	private NavigationScreen navigationScreensId;
 
-	@Column(name = "read_access")
+	@Column(name = "READ_ACCESS")
 	private boolean readAccess;
 
-	@Column(name = "write_access")
+	@Column(name = "WRITE_ACCESS")
 	private boolean writeAccess;
 
 	public Organization getOrganizationId() {

@@ -11,15 +11,15 @@ import javax.persistence.Table;
 public class GenderMaster extends BaseEntity {
 	
 
-	@Column(name = "gender", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "GENDER", columnDefinition = "NVARCHAR(250)")
 	private String gender;
 
-	@Column(name = "status", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "STATUS", columnDefinition = "NVARCHAR(250)")
 	private String status;
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
-	private Organization organsation_id;
+	@JoinColumn(name = "ORGANIZATION_ID")
+	private Organization organizationId;
 
 	public String getGender() {
 		return gender;
@@ -37,12 +37,14 @@ public class GenderMaster extends BaseEntity {
 		this.status = status;
 	}
 
-	public Organization getOrgansation_id() {
-		return organsation_id;
+	public Organization getOrganizationId() {
+		return organizationId;
 	}
 
-	public void setOrgansation_id(Organization organsation_id) {
-		this.organsation_id = organsation_id;
+	public void setOrganizationId(Organization organizationId) {
+		this.organizationId = organizationId;
 	}
+
+	
 
 }

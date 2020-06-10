@@ -11,14 +11,14 @@ import javax.persistence.Table;
 public class Roles extends BaseEntity{
 
 
-	@Column(name = "role")
+	@Column(name = "ROLE")
 	private String role;
 
-	@Column(name = "status")
+	@Column(name = "STATUS")
 	private String status;	
 	
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
+	@JoinColumn(name = "ORGANIZATION_ID")
 	private Organization organizationId;
 	
 

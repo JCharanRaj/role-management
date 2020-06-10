@@ -13,24 +13,24 @@ public class OrganizationAddress extends BaseEntity{
 
 	
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
+	@JoinColumn(name = "ORGANIZATION_ID")
 	private Organization organizationId;	
 	
-	@Column(name = "address_line1",columnDefinition = "NVARCHAR(250)")
+	@Column(name = "ADDRESS_LINE1",columnDefinition = "NVARCHAR(250)")
 	private String addressLine1;	
 
-	@Column(name = "address_line2",columnDefinition = "NVARCHAR(250)")
+	@Column(name = "ADDRESS_LINE2",columnDefinition = "NVARCHAR(250)")
 	private String addressLine2;
 
-	@Column(name = "city_name",columnDefinition = "NVARCHAR(250)")
+	@Column(name = "CITY_NAME",columnDefinition = "NVARCHAR(250)")
 	private String cityName;
 	
 	@ManyToOne
-	@JoinColumn(name = "state_id")
+	@JoinColumn(name = "STATE_ID")
 	private StateMaster stateId;
 	
 	@ManyToOne
-	@JoinColumn(name = "country_id")
+	@JoinColumn(name = "COUNTRY_ID")
 	private CountryMaster countryId;
 
 	public Organization getOrganizationId() {

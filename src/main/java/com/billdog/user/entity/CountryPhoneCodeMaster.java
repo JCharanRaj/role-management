@@ -17,11 +17,11 @@ public class CountryPhoneCodeMaster extends BaseEntity {
 	@JoinColumn(name = "COUNTRY_MASTER_ID")
 	private CountryMaster countryMasterId;
 
-	@Column(name = "status", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "STATUS", columnDefinition = "NVARCHAR(250)")
 	private String status;
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
+	@JoinColumn(name = "ORGANIZATION_ID")
 	private Organization organizationId;
 
 	public long getPhoneNumberCode() {
