@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,12 +19,14 @@ import com.billdog.user.command.CreateNavigationScreenCommand;
 import com.billdog.user.command.CreateRoleCommand;
 import com.billdog.user.command.CreateUserCommand;
 import com.billdog.user.command.EditUserDetailsCommand;
+import com.billdog.user.command.GetRoleScreensCommand;
 import com.billdog.user.command.GetRolesCommand;
 import com.billdog.user.command.SearchUsersCommand;
 import com.billdog.user.request.CreateNavigationScreen;
 import com.billdog.user.request.CreateRoleRequest;
 import com.billdog.user.request.CreateUserRequest;
 import com.billdog.user.request.EditUserDetailsRequest;
+import com.billdog.user.request.GetRoleScreens;
 import com.billdog.user.request.SearchUsersRequest;
 import com.billdog.user.response.CreateUserResponse;
 import com.billdog.user.response.UpdateUserDetailsResponse;
@@ -43,15 +46,18 @@ public class UserRoleController {
 
 	@Autowired
 	EditUserDetailsCommand editUserDetailsCommand;
-	
+
 	@Autowired
-	CreateNavigationScreenCommand createNavigationScreenCommand;	
+	CreateNavigationScreenCommand createNavigationScreenCommand;
 
 	@Autowired
 	CreateRoleCommand createRoleCommand;
-	
+
 	@Autowired
 	GetRolesCommand getRolesCommand;
+
+	@Autowired
+	GetRoleScreensCommand getRoleScreensCommand;
 
 	@Autowired
 	SearchUsersCommand searchUsersCommand;
@@ -59,25 +65,34 @@ public class UserRoleController {
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
-	@PostMapping(value = "/createRole", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/roles", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<ViewResponse> createRole(@Valid @RequestBody CreateRoleRequest createRole) {
 
 		return createRoleCommand.excute(createRole);
 	}
-	
+
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
-	@PostMapping(value = "/{userId}/getRoles", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@GetMapping(value = "/{userId}/roles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<ViewResponse> getRoles(@PathVariable long userId) {
 
 		return getRolesCommand.excute(userId);
 	}
 
 	@ApiResponses(value = {
+			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
+			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
+	@PostMapping(value = "/navigationscreens", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<ViewResponse> getRoleScreens(@Valid @RequestBody GetRoleScreens getRoleScreens) {
+
+		return getRoleScreensCommand.excute(getRoleScreens);
+	}
+
+	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user created successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
-	@PostMapping(value = "/createUser", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public CreateUserResponse createUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
 		return createUserCommand.excute(createUserRequest);
 	}
@@ -85,16 +100,18 @@ public class UserRoleController {
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user updated successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
-	@PutMapping(value = "/updateUser",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,  produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public UpdateUserDetailsResponse editUserDetails(@Valid @RequestBody EditUserDetailsRequest editUserDetailsRequest) {
+	@PutMapping(value = "/updateUser", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public UpdateUserDetailsResponse editUserDetails(
+			@Valid @RequestBody EditUserDetailsRequest editUserDetailsRequest) {
 		return editUserDetailsCommand.excute(editUserDetailsRequest);
 	}
-	
+
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "user created successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
 	@PostMapping(value = "/navigationScreen", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<ViewResponse> createUserNavigation(@Valid @RequestBody CreateNavigationScreen createNavigationScreen) {
+	public ResponseEntity<ViewResponse> createUserNavigation(
+			@Valid @RequestBody CreateNavigationScreen createNavigationScreen) {
 		return createNavigationScreenCommand.excute(createNavigationScreen);
 	}
 

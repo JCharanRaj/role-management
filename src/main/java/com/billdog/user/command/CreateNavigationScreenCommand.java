@@ -18,14 +18,6 @@ public class CreateNavigationScreenCommand implements Command<CreateNavigationSc
 	@Override
 	public ResponseEntity<ViewResponse> excute(CreateNavigationScreen createNavigationScreen) {
 
-		if (createNavigationScreen.getName().isEmpty()) {
-			throw new InValidInputException("First Name should not be null");
-		}
-
-		if (createNavigationScreen.getUrl().isEmpty()) {
-			throw new InValidInputException("last Name should not be null");
-		}
-
 		return navigationService.createNavigationPage(createNavigationScreen);
 	}
 

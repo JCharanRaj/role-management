@@ -65,6 +65,13 @@ public class ExceptionHandle extends ResponseEntityExceptionHandler {
 
 	
 	
-	
+	@ExceptionHandler(RecordExistsException.class)
+	public final ResponseEntity<ErrorResponse> handleRecordExistsException(RecordExistsException exception,
+			WebRequest request) {
+		LOGGER.info("Exception cause: " + exception.getMessage());
+		ErrorResponse errorResponse = new ErrorResponse(Constants.FAILED, exception.getLocalizedMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+	}
 	
 }
