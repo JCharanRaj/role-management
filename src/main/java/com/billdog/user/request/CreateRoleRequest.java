@@ -9,7 +9,7 @@ public class CreateRoleRequest {
 	private String name;
 
 	@NotNull(message = "Userid must not be null")
-	private long userId;
+	private Long userId;
 
 	public String getName() {
 		return name;
@@ -19,12 +19,13 @@ public class CreateRoleRequest {
 		this.name = name;
 	}
 
-	public long getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
+	
 }

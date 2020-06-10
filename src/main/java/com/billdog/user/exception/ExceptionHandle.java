@@ -16,31 +16,34 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.billdog.user.common.Constants;
 
-
-@RestController
-@ControllerAdvice
+@RestControllerAdvice
 public class ExceptionHandle extends ResponseEntityExceptionHandler {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandle.class);
 	
 	@Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
             HttpHeaders headers, HttpStatus status, WebRequest request) {
-        List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage())
+		
+        List<String> errors = exception.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage())
                 .collect(Collectors.toList());
+        LOGGER.info("Exception cause: "+errors.toString());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(Constants.FAILED,errors.get(0), request.getDescription(false)));
     }
 	
 	@ExceptionHandler(value = { ConstraintViolationException.class })
-    public ResponseEntity<Object> handleResourceNotFoundException(ConstraintViolationException e, WebRequest request) {
-        Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
+    public ResponseEntity<Object> handleResourceNotFoundException(ConstraintViolationException exception, WebRequest request) {
+		
+        Set<ConstraintViolation<?>> constraintViolations = exception.getConstraintViolations();
         List<ConstraintViolation<?>> errors = constraintViolations.stream().collect(Collectors.toList());
+        LOGGER.info("Exception cause: "+errors.toString());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(Constants.FAILED,errors.get(0).getMessage(), request.getDescription(false)));
     }

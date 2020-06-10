@@ -1,11 +1,12 @@
 package com.billdog.user.request;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class CreateNavigationScreen {
 
 	private long parentId;
-	@NotNull(message = "Screen name must not be null")
+	@NotBlank(message = "Screen name must not be null")
 	private String name;
 	@NotNull(message = "Screen url must not be null")
 	private String url;
