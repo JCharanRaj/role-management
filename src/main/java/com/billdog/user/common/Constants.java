@@ -1,6 +1,7 @@
 package com.billdog.user.common;
 
 public class Constants{
+	
 	public static final String FAILED = "FAILED";
 
 	public static final String SUCCESS = "SUCCESS";
@@ -18,4 +19,8 @@ public class Constants{
 	public static final String NAVIGATION_SCREEN_CREATED = "Navigation screen created successfully..!";
 	
 	public static final String ROLE_CREATED = "Role created successfully..!";
+	
+	
+	//status constants
+	
 }

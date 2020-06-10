@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class ErrorResponse {
 	
-	private String status;
+	private String statusText;
 	private String message;
 	private LocalDateTime timeStamp;
 	private String path;
@@ -15,12 +15,12 @@ public class ErrorResponse {
 		this.message = message;
 		this.path = path;
 		this.timeStamp = LocalDateTime.now();
-		this.status= status;
+		this.statusText= status;
 	}
 
 
 	public String getStatus() {
-		return status;
+		return statusText;
 	}
 
 	public String getMessage() {

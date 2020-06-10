@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.billdog.user.common.ExceptionalMessages;
 import com.billdog.user.entity.Organization;
 import com.billdog.user.entity.Roles;
 import com.billdog.user.exception.InValidInputException;
@@ -31,12 +32,12 @@ public class EditUserDetailsCommand implements Command<EditUserDetailsRequest, L
 
 		Optional<Organization> organization = organizationRepository.findById(editUserDetailsRequest.getUserId());
 		if (!organization.isPresent()) {
-			throw new InValidInputException("userID not found with " + editUserDetailsRequest.getUserId());
+			throw new InValidInputException(ExceptionalMessages.USER_NOT_FOUND + editUserDetailsRequest.getUserId());
 		}
 
 		Optional<Roles> role = rolesRepository.findById(editUserDetailsRequest.getRoleId());
 		if (!role.isPresent()) {
-			throw new InValidInputException("roleID not found with " + editUserDetailsRequest.getRoleId());
+			throw new InValidInputException(ExceptionalMessages.ROLE_NOT_FOUND + editUserDetailsRequest.getRoleId());
 		}
 		return createUserService.editUserDetails(editUserDetailsRequest);
 
