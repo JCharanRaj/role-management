@@ -13,17 +13,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.billdog.user.common.Constants;
 
 
-@RestController
-@ControllerAdvice
+@RestControllerAdvice
 public class ExceptionHandle extends ResponseEntityExceptionHandler {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandle.class);
@@ -46,9 +44,9 @@ public class ExceptionHandle extends ResponseEntityExceptionHandler {
     }
 
 	
-	@ExceptionHandler(InValidInputException.class)
-	public final ResponseEntity<ErrorResponse> handleInValidInputException(
-			InValidInputException exception, WebRequest request) {
+	@ExceptionHandler(BadRequestException.class)
+	public final ResponseEntity<ErrorResponse> handleBadRequestException(
+			BadRequestException exception, WebRequest request) {
 		LOGGER.info("Exception cause: "+exception.getMessage());
 		ErrorResponse errorResponse = new ErrorResponse(Constants.FAILED,exception.getLocalizedMessage(), request.getDescription(false));
 		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
@@ -62,8 +60,6 @@ public class ExceptionHandle extends ResponseEntityExceptionHandler {
 				request.getDescription(false));
 		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
 	}
-
-	
 	
 	@ExceptionHandler(RecordExistsException.class)
 	public final ResponseEntity<ErrorResponse> handleRecordExistsException(RecordExistsException exception,
@@ -73,5 +69,8 @@ public class ExceptionHandle extends ResponseEntityExceptionHandler {
 				request.getDescription(false));
 		return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
 	}
+	
+	
+	
 	
 }

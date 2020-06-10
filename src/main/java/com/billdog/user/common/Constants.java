@@ -29,4 +29,6 @@ public class Constants {
 	public static final String PASSCODE_VERIFIED_SUCCESSFULLY = "Passcode verified successfully";
 
 	public static final String PASSWORD_UPDATED = "Password updated successfully";
+
+	public static final String NAVIGATION_SCREEN_ACCESS_UPDATED = "Role navigation screen access updated successfully";
 }

@@ -93,7 +93,7 @@ public class CreateUserService {
 		SystemUsers systemUsers = new SystemUsers();
 		systemUsers.setCreatedAt(LocalDateTime.now());
 		systemUsers.setUpdatedAt(LocalDateTime.now());
-		systemUsers.setOrganzationId(sysUser.get().getOrganzationId());
+		systemUsers.setOrganizationId(sysUser.get().getOrganizationId());
 		systemUsers.setFirstName(createUserRequest.getFirstName());
 		systemUsers.setLastName(createUserRequest.getLastName());
 		systemUsers.setMiddleName(createUserRequest.getMiddleName());
@@ -138,7 +138,7 @@ public class CreateUserService {
 
 		// This condition checks whether the user's organization and updating user
 		// organization is same or not from systemUser table
-		if (systemUserEntity.get().getOrganzationId().getId() != sysUser.get().getOrganzationId().getId()) {
+		if (systemUserEntity.get().getOrganizationId().getId() != sysUser.get().getOrganizationId().getId()) {
 			throw new InValidInputException(ExceptionalMessages.THIS_USER_DOES_NOT_BELONG_TO_SAME_ORGANIZATION);
 		}
 

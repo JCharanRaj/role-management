@@ -62,7 +62,7 @@ public class CreateRoleService {
 			throw new InValidInputException("user id not found with " + createRoleRequest.getUserId());
 		}
 		
-		Optional<Roles> roleOpt = rolesRepository.findByRoleAndOrganizationId(createRoleRequest.getName(),userOptional.get().getOrganzationId());
+		Optional<Roles> roleOpt = rolesRepository.findByRoleAndOrganizationId(createRoleRequest.getName(),userOptional.get().getOrganizationId());
 		if (roleOpt.isPresent()) {
 			throw new RecordExistsException("This role is already exists");
 		}		
@@ -70,7 +70,7 @@ public class CreateRoleService {
 		Roles role = new Roles();
 		role.setCreatedAt(LocalDateTime.now());
 		role.setUpdatedAt(LocalDateTime.now());
-		role.setOrganizationId(userOptional.get().getOrganzationId());
+		role.setOrganizationId(userOptional.get().getOrganizationId());
 		role.setRole(createRoleRequest.getName());
 		role.setStatus(StatusConstants.ACTIVE);
 		rolesRepository.save(role);

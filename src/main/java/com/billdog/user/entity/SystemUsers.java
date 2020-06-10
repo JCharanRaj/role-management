@@ -10,31 +10,31 @@ import javax.persistence.Table;
 @Table(name = "system_users")
 public class SystemUsers extends BaseEntity {
 
-	@Column(name = "first_name", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "FIRST_NAME", columnDefinition = "NVARCHAR(250)")
 	private String firstName;
 
-	@Column(name = "middle_name", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "MIDDLE_NAME", columnDefinition = "NVARCHAR(250)")
 	private String middleName;
 
-	@Column(name = "last_name", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "LAST_NAME", columnDefinition = "NVARCHAR(250)")
 	private String lastName;
 
-	@Column(name = "email", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "EMAIL", columnDefinition = "NVARCHAR(250)")
 	private String email;
 
-	@Column(name = "mobile_number", columnDefinition = "NVARCHAR(250)")
+	@Column(name = "MOBILE_NUMBER", columnDefinition = "NVARCHAR(250)")
 	private String mobileNumber;
 
 	@ManyToOne
-	@JoinColumn(name = "organization_id")
-	private Organization organzationId;
+	@JoinColumn(name = "ORGANIZATION_ID")
+	private Organization organizationId;
 
 	@ManyToOne
-	@JoinColumn(name = "role_Id")
+	@JoinColumn(name = "ROLE_ID")
 	private Roles roleId;
 
 	@ManyToOne
-	@JoinColumn(name = "name_prefix_master_id")
+	@JoinColumn(name = "NAME_PREFIX_MASTER_ID")
 	private NamePrefixMaster namePrefixMasterid;
 
 	public String getFirstName() {
@@ -60,13 +60,13 @@ public class SystemUsers extends BaseEntity {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
-	public Organization getOrganzationId() {
-		return organzationId;
+	
+	public Organization getOrganizationId() {
+		return organizationId;
 	}
 
-	public void setOrganzationId(Organization organzationId) {
-		this.organzationId = organzationId;
+	public void setOrganizationId(Organization organizationId) {
+		this.organizationId = organizationId;
 	}
 
 	public NamePrefixMaster getNamePrefixMasterid() {
