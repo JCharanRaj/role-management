@@ -1,7 +1,5 @@
 package com.billdog.user.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.billdog.user.common.Constants;
 import com.billdog.user.common.ExceptionalMessages;
-import com.billdog.user.entity.RoleNavigationScreens;
 import com.billdog.user.entity.Roles;
 import com.billdog.user.entity.SystemUsers;
 import com.billdog.user.exception.NoRecordFoundException;
@@ -24,7 +21,6 @@ import com.billdog.user.repository.OrganizationRepository;
 import com.billdog.user.repository.RoleNavigationScreensRepository;
 import com.billdog.user.repository.RolesRepository;
 import com.billdog.user.repository.SystemUsersrepository;
-import com.billdog.user.request.GetRoleScreens;
 import com.billdog.user.view.ViewResponse;
 import com.billdog.user.view.ViewRole;
 
@@ -80,48 +76,5 @@ public class GetRoleService {
 		return viewRole;
 	}
 
-	/*
-	 * This method will take userId and roleId as input and provide all screens that
-	 * are mapped with a role in an organization.
-	 */
-	public ResponseEntity<ViewResponse> getRoleScreens(GetRoleScreens getRoleScreens, Roles roles) {
-		LOGGER.info("Fetching all screens for role id:: " + roles.getId());
-		List<RoleNavigationScreens> navigationScreens = roleNavigationScreensRepository
-				.findByRoleIdAndOrganizationId(roles, roles.getOrganizationId());
-
-		List<ViewRole> viewRoles = navigationScreens.stream().map(role -> getNavigationScreens(role))
-				.collect(Collectors.toList());
-
-		ViewResponse viewResponse = new ViewResponse();
-		viewResponse.setId(getRoleScreens.getUserId());
-		viewResponse.setStatusText(Constants.SUCCESS);
-		viewResponse.setData(viewRoles);
-		viewResponse.setData(setNavigationScreens(navigationScreens));
-		return ResponseEntity.status(HttpStatus.OK).body(viewResponse);
-	}
-
-	private HashMap<Long, List<RoleNavigationScreens>> setNavigationScreens(
-			List<RoleNavigationScreens> navigationScreens) {
-
-		HashMap<Long, List<RoleNavigationScreens>> navigationScreensMap = new HashMap<>();
-		navigationScreens.stream().forEach(screen -> {
-			List<RoleNavigationScreens> screenByParent = new ArrayList<>();
-			if (navigationScreensMap.containsKey(screen.getNavigationScreensId().getParent_id())
-					&& screen.getNavigationScreensId().getParent_id() != 0) {
-				screenByParent = navigationScreensMap.get(screen.getNavigationScreensId().getParent_id());
-				screenByParent.add(screen);
-				navigationScreensMap.put(screen.getNavigationScreensId().getParent_id(), screenByParent);
-			} else {
-				screenByParent.add(screen);
-				navigationScreensMap.put(screen.getNavigationScreensId().getId(), screenByParent);
-			}
-		});
-		return navigationScreensMap;
-	}
-
-	private ViewRole getNavigationScreens(RoleNavigationScreens role) {
-
-		return null;
-	}
 
 }

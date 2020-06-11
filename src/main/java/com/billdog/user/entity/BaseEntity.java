@@ -17,14 +17,14 @@ public class BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
 	@GenericGenerator(name = "native", strategy = "native")
-	@Column(name = "Id")
+	@Column(name = "ID")
 	private long id;
 	
-	@Column(name = "created_time")
+	@Column(name = "CREATED_AT")
 	private LocalDateTime createdAt;
 
 	@Audited
-	@Column(name = "updated_time")
+	@Column(name = "UPDATED_AT")
 	private LocalDateTime updatedAt;
 
 

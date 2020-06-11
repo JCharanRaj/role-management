@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.billdog.user.command.CreateNavigationScreenCommand;
@@ -22,6 +23,7 @@ import com.billdog.user.command.EditUserDetailsCommand;
 import com.billdog.user.command.GetRoleScreensCommand;
 import com.billdog.user.command.GetRolesCommand;
 import com.billdog.user.command.SearchUsersCommand;
+import com.billdog.user.command.UpdateNavigationScreenAccessCommand;
 import com.billdog.user.command.UpdatePasswordCommand;
 import com.billdog.user.command.VerifyPasscodeCommand;
 import com.billdog.user.command.ViewUserDetailsByIdCommand;
@@ -32,6 +34,7 @@ import com.billdog.user.request.EditUserDetailsRequest;
 import com.billdog.user.request.GetRoleScreens;
 import com.billdog.user.request.GetUserRequest;
 import com.billdog.user.request.SearchUsersRequest;
+import com.billdog.user.request.UpdateNavigationScreen;
 import com.billdog.user.request.UpdatePasswordRequest;
 import com.billdog.user.request.VerifyPasscodeRequest;
 import com.billdog.user.response.CreateUserResponse;
@@ -78,6 +81,9 @@ public class UserRoleController {
 	@Autowired
 	UpdatePasswordCommand updatePasswordCommand;
 
+	@Autowired
+	UpdateNavigationScreenAccessCommand updateNavigationScreenAccessCommand;
+
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
@@ -99,10 +105,21 @@ public class UserRoleController {
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
-	@PostMapping(value = "/navigationscreens", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<ViewResponse> getRoleScreens(@Valid @RequestBody GetRoleScreens getRoleScreens) {
-
+	@GetMapping(value = "/navigationscreens", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<ViewResponse> getRoleScreens(@RequestParam long userId, @RequestParam long roleId) {
+		GetRoleScreens getRoleScreens = new GetRoleScreens();
+		getRoleScreens.setRoleId(roleId);
+		getRoleScreens.setUserId(userId);
 		return getRoleScreensCommand.excute(getRoleScreens);
+	}
+
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "Generate OTP"),
+			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
+	@PutMapping(value = "/navigationscreens", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<ViewResponse> updateRoleScreenAccess(@Valid @RequestBody UpdateNavigationScreen request) {
+
+		return updateNavigationScreenAccessCommand.excute(request);
 	}
 
 	@ApiResponses(value = {
@@ -143,16 +160,18 @@ public class UserRoleController {
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "User details fetched successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
-	@PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<ViewResponse> getUser(@Valid @RequestBody GetUserRequest getUserRequest) {
-
+	@GetMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<ViewResponse> getUser(@RequestParam long id, @RequestParam long userId) {
+		GetUserRequest getUserRequest = new GetUserRequest();
+		getUserRequest.setId(id);
+		getUserRequest.setUserId(userId);
 		return viewUserDetailsByIdCommand.excute(getUserRequest);
 	}
 
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpServletResponse.SC_OK, response = Response.class, message = "passcode verified successfully"),
 			@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, response = Response.class, message = "Invalid parameters") })
-	@PostMapping(value = "/verifyPasscode", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/verifyPasscode", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<LoginResponse> verifyPasscode(
 			@Valid @RequestBody VerifyPasscodeRequest verifyPasscodeRequest) {
 		return verifyPasscodeCommand.excute(verifyPasscodeRequest);

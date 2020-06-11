@@ -69,9 +69,10 @@ public class CreateUserService {
 	 */
 	public ResponseEntity<CreateUserResponse> createUser(CreateUserRequest createUserRequest) {
 		LOGGER.info("create user method started..!");
-
+		checkMobileNumber(createUserRequest.getMobileNumber());
 		// This jpa query checks whether the organization is present or not from
 		// systemUser table
+
 		Optional<SystemUsers> sysUser = systemUsersrepository.findById(createUserRequest.getUserId());
 		if (!sysUser.isPresent()) {
 			throw new NoRecordFoundException(ExceptionalMessages.USER_NOT_FOUND + createUserRequest.getUserId());
@@ -112,6 +113,15 @@ public class CreateUserService {
 		LOGGER.info("create user method ends..!");
 		return ResponseEntity.status(HttpStatus.OK).body(createUserResponse);
 
+	}
+
+	private void checkMobileNumber(String mobileNumber) {
+		if (mobileNumber.contains(" ")) {
+			mobileNumber = mobileNumber.replace(" ", "");
+		}
+		if (mobileNumber.length() != 10) {
+			throw new InValidInputException(ExceptionalMessages.ENTER_VALID_MOBILE_NUMBER);
+		}
 	}
 
 	/**
