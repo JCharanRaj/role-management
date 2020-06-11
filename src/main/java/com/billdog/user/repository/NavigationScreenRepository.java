@@ -13,4 +13,6 @@ public interface NavigationScreenRepository extends JpaRepository<NavigationScre
 
 	List<NavigationScreen> findByOrganizationId(Organization organization);
 
+	List<NavigationScreen> findByParentId(NavigationScreen navigationScreensId);
+
 }

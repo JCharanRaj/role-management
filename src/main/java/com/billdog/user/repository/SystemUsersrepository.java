@@ -4,11 +4,13 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.billdog.user.entity.Organization;
 import com.billdog.user.entity.Roles;
 import com.billdog.user.entity.SystemUsers;
 
+@Repository
 public interface SystemUsersrepository extends JpaRepository<SystemUsers, Long> {
 
 	@Query(value = "SELECT su.id, concat(su.first_name,' ',su.last_name,' ',su.middle_name) as user_name,su.email,su.mobile_number,r.role\n" + 

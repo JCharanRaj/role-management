@@ -1,28 +1,42 @@
 package com.billdog.user.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "NAVIGATION_SCREENS")
 @Table(name = "navigation_screens")
-public class NavigationScreen extends BaseEntity{
-	
+public class NavigationScreen extends BaseEntity {
+
 	@ManyToOne
 	@JoinColumn(name = "ORGANIZATION_ID")
-	private Organization organizationId;	
-	
-	@Column(name = "NAME",columnDefinition = "NVARCHAR(250)")
-	private String name;	
-	
-	@Column(name = "URL",columnDefinition = "NVARCHAR(250) default '#'")
-	private String url;	
+	private Organization organizationId;
 
-	@Column(name = "PARENT_ID", columnDefinition = "bigint(20) default 0")
-	private long parent_id;
-	
+	@Column(name = "NAME", columnDefinition = "NVARCHAR(250)")
+	private String name;
+
+	@Column(name = "URL", columnDefinition = "NVARCHAR(250) default '#'")
+	private String url;
+
+	@ManyToOne
+	@JsonManagedReference
+	@JoinColumn(name = "PARENT_ID", columnDefinition = "bigint(20) default 0")
+	private NavigationScreen parentId;
+
+	@OneToMany(mappedBy = "parentId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonBackReference
+	private List<NavigationScreen> navigationScreens;
+
 	@Column(name = "DISPLAY_ORDER", columnDefinition = "bigint(20) default 0")
 	private long displayOrder;
 
@@ -42,12 +56,12 @@ public class NavigationScreen extends BaseEntity{
 		this.name = name;
 	}
 
-	public long getParent_id() {
-		return parent_id;
+	public NavigationScreen getParentId() {
+		return parentId;
 	}
 
-	public void setParent_id(long parent_id) {
-		this.parent_id = parent_id;
+	public void setParentId(NavigationScreen parentId) {
+		this.parentId = parentId;
 	}
 
 	public String getUrl() {
@@ -65,5 +79,13 @@ public class NavigationScreen extends BaseEntity{
 	public void setDisplayOrder(long displayOrder) {
 		this.displayOrder = displayOrder;
 	}
-	
+
+	public List<NavigationScreen> getNavigationScreens() {
+		return navigationScreens;
+	}
+
+	public void setNavigationScreens(List<NavigationScreen> navigationScreens) {
+		this.navigationScreens = navigationScreens;
+	}
+
 }

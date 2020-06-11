@@ -14,7 +14,7 @@ import com.billdog.user.exception.NoRecordFoundException;
 import com.billdog.user.repository.RolesRepository;
 import com.billdog.user.repository.SystemUsersrepository;
 import com.billdog.user.request.GetRoleScreens;
-import com.billdog.user.service.GetRoleService;
+import com.billdog.user.service.NavigationService;
 import com.billdog.user.view.ViewResponse;
 
 @Service
@@ -24,7 +24,7 @@ public class GetRoleScreensCommand implements Command<GetRoleScreens, ResponseEn
 	SystemUsersrepository systemUsersrepository;
 
 	@Autowired
-	GetRoleService getRoleService;
+	NavigationService navigationService;
 
 	@Autowired
 	RolesRepository rolesRepository;
@@ -41,7 +41,7 @@ public class GetRoleScreensCommand implements Command<GetRoleScreens, ResponseEn
 		if (!role.isPresent()) {
 			throw new InValidInputException(ExceptionalMessages.ROLE_NOT_FOUND+ + getRoleScreens.getRoleId());
 		}
-		return getRoleService.getRoleScreens(getRoleScreens,role.get());
+		return navigationService.getRoleScreens(getRoleScreens, role.get());
 
 	}
 }

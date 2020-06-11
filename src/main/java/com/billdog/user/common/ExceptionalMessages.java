@@ -14,4 +14,6 @@ public class ExceptionalMessages {
 
 	public static final String EMAIL_NOT_FOUND = "email not found with:: ";
 
+	public static final String ENTER_VALID_MOBILE_NUMBER = "Please enter valid mobile number";
+
 }

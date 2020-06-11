@@ -6,7 +6,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity(name = "SYSTEM_USERS")
+@Entity(name = "systemUsers")
 @Table(name = "system_users")
 public class SystemUsers extends BaseEntity {
 
