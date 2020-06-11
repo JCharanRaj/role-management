@@ -229,10 +229,10 @@ public class CreateUserService {
 		}
 
 		// This jpa query checks whether the role is present or not from role table
-		Optional<Roles> role = rolesRepository.findById(sysUser.get().getRoleId().getId());
-		if (!role.isPresent()) {
-			throw new NoRecordFoundException(ExceptionalMessages.ROLE_NOT_FOUND + sysUser.get().getRoleId().getId());
-		}
+//		Optional<Roles> role = rolesRepository.findById(sysUser.get().getRoleId().getId());
+//		if (!role.isPresent()) {
+//			throw new NoRecordFoundException(ExceptionalMessages.ROLE_NOT_FOUND + sysUser.get().getRoleId().getId());
+//		}
 
 		// entering into assigning values respectively
 		ViewUsersResponse viewUsersResponse = new ViewUsersResponse();
@@ -242,7 +242,7 @@ public class CreateUserService {
 		viewUsersResponse.setMiddleName(user.getMiddleName());
 		viewUsersResponse.setEmail(user.getEmail());
 		viewUsersResponse.setMobileNumber(user.getMobileNumber());
-		viewUsersResponse.setRole(role.get().getRole());
+		viewUsersResponse.setRole(sysUser.get().getRoleId().getRole());
 		viewUsersResponse.setId(user.getId());
 
 		ViewResponse viewResponse = new ViewResponse();
